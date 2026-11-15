@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 import java.util.Locale
 
@@ -74,7 +75,7 @@ fun PlaybackScreen(uri: Uri, onBack: () -> Unit) {
     LaunchedEffect(playing, player) {
         while (playing) {
             position = player.currentPosition
-            delay(200)
+            delay(200.milliseconds)
         }
     }
 
@@ -96,9 +97,11 @@ fun PlaybackScreen(uri: Uri, onBack: () -> Unit) {
                 playing = false
             } else {
                 ensureAudibleMediaOutput(context, DefaultMediaAttrs)
-                if (duration > 0 && position >= duration) {
-                    player.seekTo(0)
-                    position = 0
+                if (duration > 0) {
+                    if (position >= duration) {
+                        player.seekTo(0)
+                        position = 0
+                    }
                 }
                 player.start()
                 playing = true

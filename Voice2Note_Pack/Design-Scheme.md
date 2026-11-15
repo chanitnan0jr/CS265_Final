@@ -118,33 +118,33 @@ Recommended radius:
 Use soft muted tones, not aggressive neon colors.
 
 ### Core Material 3 / Compose Tokens
-| Token | Hex | Compose `Color` | Role |
-|---|---|---|---|
+| Token             | Hex       | Compose `Color`     | Role                                                                |
+|-------------------|-----------|---------------------|---------------------------------------------------------------------|
 | `BackgroundCream` | `#FAF5F2` | `Color(0xFFFAF5F2)` | Main screen background (`cream` in `MainActivity.kt`: `0xFFFFF8F5`) |
-| `SurfaceWhite` | `#FFFFFF` | `Color(0xFFFFFFFF)` | Cards, bottom bar, input fields |
-| `SurfaceTonal` | `#F5ECE8` | `Color(0xFFF5ECE8)` | Status pill, subtle secondary containers |
-| `PrimaryCoral` | `#C87468` | `Color(0xFFC87468)` | Primary record CTA, active calendar day, primary action highlights |
-| `SecondaryRose` | `#AA6D78` | `Color(0xFFAA6D78)` | App accent (`rose` in codebase), metadata text, secondary icons |
-| `TextPrimary` | `#2F2726` | `Color(0xFF2F2726)` | Deep charcoal headings and transcript body |
-| `TextSecondary` | `#7D716E` | `Color(0xFF7D716E)` | Warm gray durations, timestamps, subtitles |
-| `BorderSoft` | `#E8DDD9` | `Color(0xFFE8DDD9)` | Soft hairline card/chip strokes |
+| `SurfaceWhite`    | `#FFFFFF` | `Color(0xFFFFFFFF)` | Cards, bottom bar, input fields                                     |
+| `SurfaceTonal`    | `#F5ECE8` | `Color(0xFFF5ECE8)` | Status pill, subtle secondary containers                            |
+| `PrimaryCoral`    | `#C87468` | `Color(0xFFC87468)` | Primary record CTA, active calendar day, primary action highlights  |
+| `SecondaryRose`   | `#AA6D78` | `Color(0xFFAA6D78)` | App accent (`rose` in codebase), metadata text, secondary icons     |
+| `TextPrimary`     | `#2F2726` | `Color(0xFF2F2726)` | Deep charcoal headings and transcript body                          |
+| `TextSecondary`   | `#7D716E` | `Color(0xFF7D716E)` | Warm gray durations, timestamps, subtitles                          |
+| `BorderSoft`      | `#E8DDD9` | `Color(0xFFE8DDD9)` | Soft hairline card/chip strokes                                     |
 
 ### Emotion Colors (`อารมณ์ตอนนี้`)
-| Thai Label | Meaning | Container Hex | Content / Icon Hex |
-|---|---|---|---|
-| `ดีมาก` | Very Good | `#E8EFE9` | `#5C8A67` |
-| `ดี` | Good | `#FBF0E4` | `#C98A4B` |
-| `ปกติ` | Normal | `#F5E6E4` | `#C87468` |
-| `เครียด` | Stressed | `#F6E5DF` | `#B85D4B` |
-| `เศร้า` | Sad | `#EAE8F0` | `#6E6A85` |
+| Thai Label | Meaning   | Container Hex | Content / Icon Hex |
+|------------|-----------|---------------|--------------------|
+| `ดีมาก`    | Very Good | `#E8EFE9`     | `#5C8A67`          |
+| `ดี`       | Good      | `#FBF0E4`     | `#C98A4B`          |
+| `ปกติ`     | Normal    | `#F5E6E4`     | `#C87468`          |
+| `เครียด`   | Stressed  | `#F6E5DF`     | `#B85D4B`          |
+| `เศร้า`    | Sad       | `#EAE8F0`     | `#6E6A85`          |
 
 ### Default Folder Card Tints
 | Folder (`โฟลเดอร์`) | Background Hex |
-|---|---|
-| `การเรียน` | `#ECE6F0` |
-| `ระบายความรู้สึก` | `#F5E7E5` |
-| `งาน / โปรเจกต์` | `#F7ECE2` |
-| `ไอเดีย` | `#E9EEE8` |
+|---------------------|----------------|
+| `การเรียน`          | `#ECE6F0`      |
+| `ระบายความรู้สึก`   | `#F5E7E5`      |
+| `งาน / โปรเจกต์`    | `#F7ECE2`      |
+| `ไอเดีย`            | `#E9EEE8`      |
 
 Avoid overly saturated red except for the small active recording dot (`🔴 กำลังบันทึก`).
 
@@ -157,14 +157,14 @@ The UI should support Thai comfortably without clipped tone marks or tight line 
 ### Font Family & Compose `Typography` Scale
 Preferred fonts: **Noto Sans Thai** or **Anuphan** (fallback to Android system Thai sans-serif).
 
-| Compose Role | Size | Line Height | Weight | Usage |
-|---|---|---|---|---|
-| `headlineMedium` | `24.sp` | `34.sp` | `FontWeight.Bold` | Hero prompt (`วันนี้อยากบันทึกอะไร?`), screen titles |
-| `headlineSmall` | `20.sp` | `28.sp` | `FontWeight.SemiBold` | Section titles (`บันทึกรายวัน`, `คลังโน้ต`) |
-| `titleMedium` | `16.sp` | `24.sp` | `FontWeight.SemiBold` | Note card titles, folder titles |
-| `bodyLarge` | `16.sp` | `26.sp` | `FontWeight.Normal` | Live & saved Thai transcript text |
-| `bodyMedium` | `14.sp` | `20.sp` | `FontWeight.Normal` | Supporting copy, chip labels |
-| `labelSmall` | `12.sp` | `16.sp` | `FontWeight.Medium` | Duration, timestamp, folder/mood metadata |
+| Compose Role     | Size    | Line Height | Weight                | Usage                                                |
+|------------------|---------|-------------|-----------------------|------------------------------------------------------|
+| `headlineMedium` | `24.sp` | `34.sp`     | `FontWeight.Bold`     | Hero prompt (`วันนี้อยากบันทึกอะไร?`), screen titles |
+| `headlineSmall`  | `20.sp` | `28.sp`     | `FontWeight.SemiBold` | Section titles (`บันทึกรายวัน`, `คลังโน้ต`)          |
+| `titleMedium`    | `16.sp` | `24.sp`     | `FontWeight.SemiBold` | Note card titles, folder titles                      |
+| `bodyLarge`      | `16.sp` | `26.sp`     | `FontWeight.Normal`   | Live & saved Thai transcript text                    |
+| `bodyMedium`     | `14.sp` | `20.sp`     | `FontWeight.Normal`   | Supporting copy, chip labels                         |
+| `labelSmall`     | `12.sp` | `16.sp`     | `FontWeight.Medium`   | Duration, timestamp, folder/mood metadata            |
 
 ### Typography Tone
 - friendly, modern, not playful-cartoon

@@ -167,17 +167,17 @@ These features should feel supportive, not intrusive.
 
 ## 4. Technical Milestones
 
-| Milestone | Focus | Deliverable |
-|---|---|---|
-| M1 | Product structure | Navigation, app shell, base screens |
-| M2 | Live STT | Thai live recording and transcript capture |
-| M3 | Notes persistence | Save, list, search, and calendar |
-| M4 | Folder system | Create/manage folders and organize notes |
-| M5 | Async upload | Background file upload + transcription states |
-| M6 | Playback | Audio note detail and transcript screen |
-| M7 | Karaoke sync | Highlight + tap-to-seek prototype |
-| M8 | Scoped search | Multi-scope retrieval |
-| M9 | Intelligence | Mood analytics / summary / prompt experiments |
+| Milestone | Focus             | Deliverable                                   |
+|-----------|-------------------|-----------------------------------------------|
+| M1        | Product structure | Navigation, app shell, base screens           |
+| M2        | Live STT          | Thai live recording and transcript capture    |
+| M3        | Notes persistence | Save, list, search, and calendar              |
+| M4        | Folder system     | Create/manage folders and organize notes      |
+| M5        | Async upload      | Background file upload + transcription states |
+| M6        | Playback          | Audio note detail and transcript screen       |
+| M7        | Karaoke sync      | Highlight + tap-to-seek prototype             |
+| M8        | Scoped search     | Multi-scope retrieval                         |
+| M9        | Intelligence      | Mood analytics / summary / prompt experiments |
 
 ### 4.1 Android Technical Architecture (Kotlin & Jetpack Compose)
 

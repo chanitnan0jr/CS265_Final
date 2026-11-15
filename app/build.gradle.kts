@@ -1,7 +1,17 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
 }
+
+// local.properties is untracked, so each machine can point at its own transcription server.
+val localProperties = Properties().apply {
+    rootProject.file("local.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
+}
+val transcriptionBaseUrl = providers.gradleProperty("transcriptionBaseUrl")
+    .getOrElse(localProperties.getProperty("transcriptionBaseUrl").orEmpty())
+    .trim()
 
 android {
     namespace = "com.example.cs265final"
@@ -17,6 +27,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "TRANSCRIPTION_BASE_URL", "\"${transcriptionBaseUrl.replace("\\", "\\\\").replace("\"", "\\\"")}\"")
     }
 
     buildTypes {
@@ -32,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -42,7 +54,10 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.jump3r)
     testImplementation(libs.junit)
+    testImplementation(libs.json) // JVM unit tests have no Android org.json implementation.
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     // ponytail: Compose pulls Espresso 3.5, which cannot inject input on Android 37.

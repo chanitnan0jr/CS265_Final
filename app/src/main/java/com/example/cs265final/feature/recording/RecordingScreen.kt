@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cs265final.ui.theme.*
 import java.util.Locale
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 
 private val DefaultWaveformHeights = listOf(
@@ -71,7 +72,7 @@ fun RecordingScreen(
 
     LaunchedEffect(listening) {
         while (listening) {
-            delay(1_000L)
+            delay(1.seconds)
             elapsedSeconds += 1
         }
     }

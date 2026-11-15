@@ -23,7 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.example.cs265final.data.Note
+import com.example.cs265final.data.TranscriptionStatus
+import com.example.cs265final.data.isPending
 import com.example.cs265final.feature.playback.DefaultMediaAttrs
 import com.example.cs265final.feature.playback.ensureAudibleMediaOutput
 import com.example.cs265final.feature.playback.formatTime
@@ -34,6 +37,7 @@ import com.example.cs265final.writeWavFile
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 
 @Composable
@@ -43,6 +47,7 @@ fun NoteDetailScreen(
     onRename: (String) -> Boolean = { false },
     onListenOriginal: () -> Unit = {},
     onDelete: () -> Unit = {},
+    onRetryTranscription: (() -> Unit)? = null,
     onBack: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -55,7 +60,7 @@ fun NoteDetailScreen(
     val playableUri = remember(note) {
         if (note.audioUri.isBlank()) null
         else {
-            val parsed = Uri.parse(note.audioUri)
+            val parsed = note.audioUri.toUri()
             if (parsed.scheme == "file" && parsed.path?.endsWith(".pcm", ignoreCase = true) == true) {
                 val pcmFile = File(requireNotNull(parsed.path))
                 val wavFile = File(pcmFile.path.dropLast(4) + ".wav")
@@ -106,13 +111,13 @@ fun NoteDetailScreen(
         if (!playing || mediaPlayer == null || !mediaReady) return@LaunchedEffect
         while (playing) {
             elapsedSeconds = (mediaPlayer.currentPosition / 1000).coerceAtLeast(0)
-            delay(250L)
+            delay(250.milliseconds)
         }
     }
 
     LaunchedEffect(copied) {
         if (copied) {
-            delay(1_500L)
+            delay(1_500.milliseconds)
             copied = false
         }
     }
@@ -199,6 +204,37 @@ fun NoteDetailScreen(
             PillTag(note.folder) { FolderNavIcon(selected = false, color = SecondaryRose, modifier = Modifier.size(15.dp)) }
         }
 
+        if (note.transcription.isPending() || note.transcription == TranscriptionStatus.FAILED) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(18.dp),
+                color = SurfaceTonal,
+                border = BorderStroke(1.dp, BorderSoft),
+            ) {
+                Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Text(
+                        text = when (note.transcription) {
+                            TranscriptionStatus.QUEUED -> "รอถอดข้อความ..."
+                            TranscriptionStatus.PROCESSING -> "กำลังถอดข้อความ..."
+                            else -> "ถอดข้อความไม่สำเร็จ"
+                        },
+                        style = MaterialTheme.typography.titleMedium,
+                        color = if (note.transcription == TranscriptionStatus.FAILED) RecordingDotRed else TextPrimary,
+                    )
+                    if (note.transcription.isPending()) {
+                        LinearProgressIndicator(Modifier.fillMaxWidth(), color = PrimaryCoral, trackColor = BorderSoft)
+                    } else {
+                        if (note.transcriptionError.isNotBlank()) {
+                            Text(note.transcriptionError, style = MaterialTheme.typography.bodyMedium, color = TextSecondary)
+                        }
+                        if (onRetryTranscription != null) {
+                            Button(onClick = onRetryTranscription) { Text("ลองอีกครั้ง") }
+                        }
+                    }
+                }
+            }
+        }
+
         Surface(
             onClick = ::togglePlayback,
             modifier = Modifier.fillMaxWidth(),
@@ -220,18 +256,20 @@ fun NoteDetailScreen(
             }
         }
 
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(22.dp),
-            color = SurfaceWhite,
-            border = BorderStroke(1.dp, BorderSoft),
-            shadowElevation = 1.dp,
-        ) {
-            Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Text(note.body, style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 27.sp), color = TextPrimary)
-                Row(modifier = Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    PillTag(note.mood) { TagOutlineIcon(SecondaryRose, Modifier.size(14.dp)) }
-                    PillTag(note.folder) { FolderNavIcon(selected = false, color = SecondaryRose, modifier = Modifier.size(14.dp)) }
+        if (note.body.isNotBlank()) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(22.dp),
+                color = SurfaceWhite,
+                border = BorderStroke(1.dp, BorderSoft),
+                shadowElevation = 1.dp,
+            ) {
+                Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                    Text(note.body, style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 27.sp), color = TextPrimary)
+                    Row(modifier = Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        PillTag(note.mood) { TagOutlineIcon(SecondaryRose, Modifier.size(14.dp)) }
+                        PillTag(note.folder) { FolderNavIcon(selected = false, color = SecondaryRose, modifier = Modifier.size(14.dp)) }
+                    }
                 }
             }
         }

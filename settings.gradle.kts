@@ -1,3 +1,6 @@
+// Gradle 9.5 marks the settings repository API incubating and offers no stable replacement yet.
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         google {

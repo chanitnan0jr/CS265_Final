@@ -8,6 +8,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.json.JSONException
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -70,5 +72,35 @@ class NoteStorageTest {
         } catch (_: JSONException) {
             assertEquals("invalid", prefs.getString("items", null))
         }
+    }
+
+    @Test fun uiSaveKeepsAWorkerTranscriptionResult() {
+        val queued = Note(
+            "Voice", "", "ปกติ", "ไฟล์ที่อัปโหลด", 1, "content://audio/1", AudioSource.UPLOADED,
+            jobId = "job_1", transcription = TranscriptionStatus.QUEUED,
+        )
+        assertTrue(NoteStorage(context).save(listOf(queued)))
+        assertTrue(NoteStorage(context).updateTranscription("job_1") { it.copy(body = "ข้อความ", transcription = TranscriptionStatus.COMPLETED) })
+
+        val merged = NoteStorage(context).savePreservingTranscriptions(listOf(queued.copy(title = "Renamed")))
+
+        assertNotNull(merged)
+        assertEquals("Renamed", merged!![0].title)
+        assertEquals("ข้อความ", merged[0].body)
+        assertEquals(TranscriptionStatus.COMPLETED, merged[0].transcription)
+        assertEquals(merged, NoteStorage(context).load())
+    }
+
+    @Test fun aStaleWorkerCannotUpdateAReplacementJob() {
+        val queued = Note(
+            "Voice", "", "ปกติ", "ไฟล์ที่อัปโหลด", 1, "content://audio/1", AudioSource.UPLOADED,
+            jobId = "job_1", transcription = TranscriptionStatus.QUEUED,
+        )
+        assertTrue(NoteStorage(context).save(listOf(queued)))
+        assertTrue(NoteStorage(context).updateTranscription("job_1") { it.copy(jobId = "job_2") })
+
+        assertFalse(NoteStorage(context).updateTranscription("job_1") { it.copy(body = "old audio", transcription = TranscriptionStatus.COMPLETED) })
+        assertEquals("job_2", NoteStorage(context).load()[0].jobId)
+        assertEquals(TranscriptionStatus.QUEUED, NoteStorage(context).load()[0].transcription)
     }
 }

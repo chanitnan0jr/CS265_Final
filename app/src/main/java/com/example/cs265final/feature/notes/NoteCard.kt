@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.cs265final.data.Note
+import com.example.cs265final.data.TranscriptionStatus
+import com.example.cs265final.data.isPending
 import com.example.cs265final.ui.theme.*
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -29,6 +31,12 @@ fun NoteCard(
     onClick: (Note) -> Unit,
 ) {
     val moodVisual = moodStyle(note.mood)
+    val statusText = when (note.transcription) {
+        TranscriptionStatus.QUEUED -> "รอถอดข้อความ"
+        TranscriptionStatus.PROCESSING -> "กำลังถอดข้อความ..."
+        TranscriptionStatus.FAILED -> "ถอดข้อความไม่สำเร็จ"
+        else -> null
+    }
     Card(
         onClick = { onClick(note) },
         modifier = Modifier.fillMaxWidth(),
@@ -37,57 +45,73 @@ fun NoteCard(
         border = BorderStroke(1.dp, BorderSoft),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Box(
-                modifier = Modifier.size(40.dp).clip(CircleShape).background(PlayBadgeTint),
-                contentAlignment = Alignment.Center,
-            ) { PlayTriangleIcon(color = PrimaryCoral, modifier = Modifier.size(13.dp)) }
+        Column {
+            Row(
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Box(
+                    modifier = Modifier.size(40.dp).clip(CircleShape).background(PlayBadgeTint),
+                    contentAlignment = Alignment.Center,
+                ) { PlayTriangleIcon(color = PrimaryCoral, modifier = Modifier.size(13.dp)) }
 
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(note.title, style = MaterialTheme.typography.titleMedium, color = TextPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                if (note.body.isNotBlank() && !showMoodBadge) {
-                    Text(note.body, style = MaterialTheme.typography.bodyMedium, color = TextSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                }
-                Text(
-                    text = "${format.format(Date(note.time))} • ${note.folder}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = TextSecondary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-
-            if (showMoodBadge) {
-                Surface(shape = RoundedCornerShape(999.dp), color = moodVisual.container) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        MoodFaceIcon(mood = note.mood, color = moodVisual.content, modifier = Modifier.size(15.dp))
-                        Text(note.mood, style = MaterialTheme.typography.labelSmall, color = moodVisual.content, maxLines = 1)
-                    }
-                }
-            } else if (onDelete != null) {
-                var menuOpen by remember { mutableStateOf(false) }
-                Box {
-                    CircleIconButton(32.dp, "ตัวเลือก ${note.title}", onClick = { menuOpen = true }) {
-                        MoreVertIcon(color = TextSecondary, modifier = Modifier.size(18.dp))
-                    }
-                    DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                        DropdownMenuItem(
-                            text = { Text("ลบโน้ต", color = RecordingDotRed) },
-                            leadingIcon = { TrashOutlineIcon(RecordingDotRed, Modifier.size(16.dp)) },
-                            onClick = { menuOpen = false; onDelete(note) },
+                Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    Text(note.title, style = MaterialTheme.typography.titleMedium, color = TextPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    if (statusText != null) {
+                        Text(
+                            statusText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (note.transcription == TranscriptionStatus.FAILED) RecordingDotRed else SecondaryRose,
+                            maxLines = 1,
                         )
+                    } else if (note.body.isNotBlank() && !showMoodBadge) {
+                        Text(note.body, style = MaterialTheme.typography.bodyMedium, color = TextSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
+                    Text(
+                        text = "${format.format(Date(note.time))} • ${note.folder}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextSecondary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 }
-            } else {
-                MoreVertIcon(color = TextSecondary, modifier = Modifier.size(18.dp))
+
+                if (showMoodBadge) {
+                    Surface(shape = RoundedCornerShape(999.dp), color = moodVisual.container) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
+                            MoodFaceIcon(mood = note.mood, color = moodVisual.content, modifier = Modifier.size(15.dp))
+                            Text(note.mood, style = MaterialTheme.typography.labelSmall, color = moodVisual.content, maxLines = 1)
+                        }
+                    }
+                } else if (onDelete != null) {
+                    var menuOpen by remember { mutableStateOf(false) }
+                    Box {
+                        CircleIconButton(32.dp, "ตัวเลือก ${note.title}", onClick = { menuOpen = true }) {
+                            MoreVertIcon(color = TextSecondary, modifier = Modifier.size(18.dp))
+                        }
+                        DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                            DropdownMenuItem(
+                                text = { Text("ลบโน้ต", color = RecordingDotRed) },
+                                leadingIcon = { TrashOutlineIcon(RecordingDotRed, Modifier.size(16.dp)) },
+                                onClick = { menuOpen = false; onDelete(note) },
+                            )
+                        }
+                    }
+                } else {
+                    MoreVertIcon(color = TextSecondary, modifier = Modifier.size(18.dp))
+                }
+            }
+            if (note.transcription.isPending()) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, bottom = 10.dp),
+                    color = PrimaryCoral,
+                    trackColor = BorderSoft,
+                )
             }
         }
     }
