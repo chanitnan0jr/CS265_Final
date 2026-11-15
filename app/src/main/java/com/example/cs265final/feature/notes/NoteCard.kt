@@ -2,12 +2,11 @@ package com.example.cs265final.feature.notes
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,11 +25,13 @@ fun NoteCard(
     note: Note,
     format: SimpleDateFormat,
     showMoodBadge: Boolean = false,
+    onDelete: ((Note) -> Unit)? = null,
     onClick: (Note) -> Unit,
 ) {
     val moodVisual = moodStyle(note.mood)
     Card(
-        modifier = Modifier.fillMaxWidth().clickable { onClick(note) },
+        onClick = { onClick(note) },
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = SurfaceWhite),
         border = BorderStroke(1.dp, BorderSoft),
@@ -69,6 +70,20 @@ fun NoteCard(
                     ) {
                         MoodFaceIcon(mood = note.mood, color = moodVisual.content, modifier = Modifier.size(15.dp))
                         Text(note.mood, style = MaterialTheme.typography.labelSmall, color = moodVisual.content, maxLines = 1)
+                    }
+                }
+            } else if (onDelete != null) {
+                var menuOpen by remember { mutableStateOf(false) }
+                Box {
+                    CircleIconButton(32.dp, "ตัวเลือก ${note.title}", onClick = { menuOpen = true }) {
+                        MoreVertIcon(color = TextSecondary, modifier = Modifier.size(18.dp))
+                    }
+                    DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                        DropdownMenuItem(
+                            text = { Text("ลบโน้ต", color = RecordingDotRed) },
+                            leadingIcon = { TrashOutlineIcon(RecordingDotRed, Modifier.size(16.dp)) },
+                            onClick = { menuOpen = false; onDelete(note) },
+                        )
                     }
                 }
             } else {

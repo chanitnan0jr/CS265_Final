@@ -3,7 +3,6 @@ package com.example.cs265final.feature.home
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,8 +15,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,6 +35,7 @@ fun HomeScreen(
     onSelect: (Note) -> Unit,
     onUpload: () -> Unit = onNew,
     onViewAll: () -> Unit = {},
+    onDelete: (Note) -> Unit = {},
 ) {
     Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Row(
@@ -74,15 +72,7 @@ fun HomeScreen(
                 Spacer(Modifier.height(26.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     WaveformBars(Modifier.width(58.dp).height(34.dp), SideWaveHeights, active = false, inactiveColor = PrimaryCoral.copy(alpha = 0.5f))
-                    Box(
-                        modifier = Modifier
-                            .size(110.dp)
-                            .clip(CircleShape)
-                            .background(PrimaryCoral.copy(alpha = 0.14f))
-                            .clickable { onNew() }
-                            .semantics { contentDescription = "เริ่มบันทึกเสียง" },
-                        contentAlignment = Alignment.Center,
-                    ) {
+                    CircleIconButton(110.dp, "เริ่มบันทึกเสียง", PrimaryCoral.copy(alpha = 0.14f), onClick = onNew) {
                         Box(Modifier.size(94.dp).clip(CircleShape).background(PrimaryCoral.copy(alpha = 0.24f)), contentAlignment = Alignment.Center) {
                             Box(
                                 modifier = Modifier.size(78.dp).clip(CircleShape).background(Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral))),
@@ -122,7 +112,7 @@ fun HomeScreen(
                     )
                 }
             } else {
-                notes.take(3).forEach { NoteCard(it, dateFormat, showMoodBadge = false, onClick = onSelect) }
+                notes.take(3).forEach { NoteCard(it, dateFormat, showMoodBadge = false, onDelete = onDelete, onClick = onSelect) }
             }
         }
     }
@@ -136,7 +126,8 @@ private fun RowScope.QuickActionCard(
     icon: @Composable () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.weight(1f).height(64.dp).clip(RoundedCornerShape(18.dp)).clickable(onClick = onClick),
+        onClick = onClick,
+        modifier = Modifier.weight(1f).height(64.dp),
         shape = RoundedCornerShape(18.dp),
         color = SurfaceWhite,
         border = BorderStroke(1.dp, BorderSoft),

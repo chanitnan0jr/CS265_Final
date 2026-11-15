@@ -13,8 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,10 +29,7 @@ private val ThaiWeekdays = listOf("อา", "จ", "อ", "พ", "พฤ", "ศ"
 
 private fun monthStartMillis(template: Calendar, source: Date): Long = (template.clone() as Calendar).run {
     time = source
-    set(Calendar.DAY_OF_MONTH, 1)
-    set(Calendar.HOUR_OF_DAY, 0)
-    set(Calendar.MINUTE, 0)
-    set(Calendar.SECOND, 0)
+    set(get(Calendar.YEAR), get(Calendar.MONTH), 1, 0, 0, 0)
     set(Calendar.MILLISECOND, 0)
     timeInMillis
 }
@@ -47,6 +42,7 @@ fun CalendarScreen(
     onDateChange: (String) -> Unit,
     onSelect: (Note) -> Unit,
     onNew: () -> Unit = {},
+    onDelete: (Note) -> Unit = {},
 ) {
     val parsedSelected = remember(date, dateFormat) { runCatching { dateFormat.parse(date) }.getOrNull() }
     var monthStart by remember { mutableLongStateOf(monthStartMillis(dateFormat.calendar, parsedSelected ?: Date())) }
@@ -80,11 +76,7 @@ fun CalendarScreen(
                 Text("บันทึกรายวัน", style = MaterialTheme.typography.headlineSmall, color = TextPrimary)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Surface(
-                    modifier = Modifier.clip(RoundedCornerShape(999.dp)).clickable { onDateChange(dateFormat.format(Date())) },
-                    shape = RoundedCornerShape(999.dp),
-                    color = SurfaceTonal,
-                ) {
+                Surface(onClick = { onDateChange(dateFormat.format(Date())) }, shape = RoundedCornerShape(999.dp), color = SurfaceTonal) {
                     Text("วันนี้", style = MaterialTheme.typography.labelSmall, color = SecondaryRose, modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp))
                 }
                 MoreVertIcon(TextPrimary, Modifier.size(20.dp))
@@ -121,18 +113,13 @@ fun CalendarScreen(
                                     }
                                 }
                                 val selected = dayDate == date
+                                val dayCircle = if (selected) Modifier.background(Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral)), CircleShape) else Modifier
                                 Column(
                                     modifier = Modifier.weight(1f).height(42.dp).clip(RoundedCornerShape(12.dp)).clickable { onDateChange(dayDate) },
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.Center,
                                 ) {
-                                    Box(
-                                        modifier = Modifier.size(30.dp).clip(CircleShape).background(
-                                            if (selected) Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral))
-                                            else Brush.linearGradient(listOf(Color.Transparent, Color.Transparent)),
-                                        ),
-                                        contentAlignment = Alignment.Center,
-                                    ) {
+                                    Box(modifier = Modifier.size(30.dp).then(dayCircle), contentAlignment = Alignment.Center) {
                                         Text(
                                             text = day.toString(),
                                             style = MaterialTheme.typography.bodyMedium,
@@ -161,19 +148,16 @@ fun CalendarScreen(
                 Text("ไม่มีโน้ตในวันนี้", style = MaterialTheme.typography.bodyMedium, color = TextSecondary, modifier = Modifier.padding(20.dp))
             }
         } else {
-            foundNotes.forEach { NoteCard(it, dateFormat, showMoodBadge = true, onClick = onSelect) }
+            foundNotes.forEach { NoteCard(it, dateFormat, showMoodBadge = true, onDelete = onDelete, onClick = onSelect) }
         }
 
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-            Box(
-                modifier = Modifier
-                    .size(54.dp)
-                    .clip(CircleShape)
-                    .background(Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral)))
-                    .clickable { onNew() }
-                    .semantics { contentDescription = "สร้างโน้ตใหม่" },
-                contentAlignment = Alignment.Center,
-            ) { Text("+", fontSize = 26.sp, color = SurfaceWhite, fontWeight = FontWeight.Light) }
+            CircleIconButton(54.dp, "สร้างโน้ตใหม่", onClick = onNew) {
+                Box(
+                    modifier = Modifier.fillMaxSize().background(Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral))),
+                    contentAlignment = Alignment.Center,
+                ) { Text("+", fontSize = 26.sp, color = SurfaceWhite, fontWeight = FontWeight.Light) }
+            }
         }
     }
 }

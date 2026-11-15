@@ -53,6 +53,15 @@ class NoteStorageTest {
         assertEquals("Original text", restored[0].body)
     }
 
+    @Test fun sourceRoundTripsAndLegacyAudioUrisMigrate() {
+        val legacy = """[{"title":"Recording","body":"text","mood":"calm","folder":"Work","time":1,"audioUri":"file:///data/voice.wav"},{"title":"Upload","body":"text","mood":"calm","folder":"Home","time":2,"audioUri":"content://audio/1"},{"title":"Old","body":"text","mood":"calm","folder":"Home","time":3}]"""
+        assertTrue(prefs.edit().putString("items", legacy).commit())
+        val migrated = NoteStorage(context).load()
+        assertEquals(listOf(AudioSource.RECORDED, AudioSource.UPLOADED, AudioSource.UNKNOWN), migrated.map { it.audioSource })
+        assertTrue(NoteStorage(context).save(migrated))
+        assertEquals(migrated, NoteStorage(context).load())
+    }
+
     @Test fun malformedDataIsNotTreatedAsAnEmptyLibrary() {
         prefs.edit().putString("items", "invalid").commit()
         try {

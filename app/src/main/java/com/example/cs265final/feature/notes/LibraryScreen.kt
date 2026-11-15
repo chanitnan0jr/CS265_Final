@@ -1,25 +1,22 @@
 package com.example.cs265final.feature.notes
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.cs265final.data.Note
+import com.example.cs265final.data.AudioSource
 import com.example.cs265final.data.filterNotes
 import com.example.cs265final.ui.theme.*
 import java.text.SimpleDateFormat
 
-private val DefaultFolders = listOf("การเรียน", "ระบายความรู้สึก", "งาน / โปรเจกต์", "ไอเดีย")
 private val SourceFilters = listOf("ทั้งหมด", "เสียงที่บันทึก", "ไฟล์ที่อัปโหลด")
 
 @Composable
@@ -28,6 +25,7 @@ fun LibraryScreen(
     dateFormat: SimpleDateFormat,
     onSelect: (Note) -> Unit,
     onSearchClick: () -> Unit = {},
+    onDelete: (Note) -> Unit = {},
 ) {
     var activeFilter by remember { mutableStateOf("ทั้งหมด") }
     var selectedFolder by remember { mutableStateOf<String?>(null) }
@@ -37,13 +35,12 @@ fun LibraryScreen(
     }
     val countsByFolder = remember(notes) { notes.groupingBy { it.folder }.eachCount() }
     val filteredNotes = remember(notes, activeFilter, selectedFolder) {
-        notes.filterNotes(folder = selectedFolder).filter { note ->
-            when (activeFilter) {
-                "ไฟล์ที่อัปโหลด" -> note.folder.contains("อัปโหลด", ignoreCase = true)
-                "เสียงที่บันทึก" -> !note.folder.contains("อัปโหลด", ignoreCase = true)
-                else -> true
-            }
+        val source = when (activeFilter) {
+            "ไฟล์ที่อัปโหลด" -> AudioSource.UPLOADED
+            "เสียงที่บันทึก" -> AudioSource.RECORDED
+            else -> null
         }
+        notes.filterNotes(folder = selectedFolder, audioSource = source)
     }
 
     Column(
@@ -56,9 +53,7 @@ fun LibraryScreen(
                 Text("คลังโน้ต", style = MaterialTheme.typography.headlineSmall, color = TextPrimary)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Box(Modifier.size(32.dp).clip(CircleShape).clickable { onSearchClick() }, contentAlignment = Alignment.Center) {
-                    SearchIcon(TextPrimary, Modifier.size(20.dp))
-                }
+                CircleIconButton(32.dp, "ค้นหา", onClick = onSearchClick) { SearchIcon(TextPrimary, Modifier.size(20.dp)) }
                 MoreVertIcon(TextPrimary, Modifier.size(20.dp))
             }
         }
@@ -70,7 +65,7 @@ fun LibraryScreen(
             SourceFilters.forEach { label ->
                 val selected = activeFilter == label
                 Surface(
-                    modifier = Modifier.clip(RoundedCornerShape(999.dp)).clickable {
+                    onClick = {
                         activeFilter = label
                         if (label == "ทั้งหมด") selectedFolder = null
                     },
@@ -95,7 +90,8 @@ fun LibraryScreen(
                     rowFolders.forEach { folderName ->
                         val selected = selectedFolder == folderName
                         Surface(
-                            modifier = Modifier.weight(1f).clip(RoundedCornerShape(18.dp)).clickable { selectedFolder = if (selected) null else folderName },
+                            onClick = { selectedFolder = if (selected) null else folderName },
+                            modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(18.dp),
                             color = folderTint(folderName),
                             border = BorderStroke(if (selected) 1.5.dp else 1.dp, if (selected) PrimaryCoral else BorderSoft),
@@ -124,7 +120,7 @@ fun LibraryScreen(
                 Text("ยังไม่มีโน้ตในหมวดนี้", style = MaterialTheme.typography.bodyMedium, color = TextSecondary, modifier = Modifier.padding(20.dp))
             }
         } else {
-            filteredNotes.forEach { NoteCard(it, dateFormat, showMoodBadge = false, onClick = onSelect) }
+            filteredNotes.forEach { NoteCard(it, dateFormat, showMoodBadge = false, onDelete = onDelete, onClick = onSelect) }
         }
     }
 }

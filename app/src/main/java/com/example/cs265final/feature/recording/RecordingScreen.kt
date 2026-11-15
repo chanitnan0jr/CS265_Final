@@ -3,7 +3,6 @@ package com.example.cs265final.feature.recording
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -19,10 +18,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cs265final.ui.theme.*
@@ -66,14 +62,11 @@ fun RecordingScreen(
     folder: String,
     onFolderChange: (String) -> Unit,
     message: String = "",
-    elapsedText: String = "",
-    moodOptions: List<String> = listOf("ดีมาก", "ดี", "ปกติ", "เครียด", "เศร้า"),
-    folderOptions: List<String> = listOf("การเรียน", "ระบายความรู้สึก", "งาน / โปรเจกต์", "ไอเดีย"),
     onToggleMic: () -> Unit,
     onSave: () -> Unit,
     onCancel: () -> Unit,
 ) {
-    var showMetaEditor by remember { mutableStateOf(title.isNotBlank() || folder.isNotBlank()) }
+    var showMetaEditor by remember { mutableStateOf(true) }
     var elapsedSeconds by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(listening) {
@@ -83,11 +76,8 @@ fun RecordingScreen(
         }
     }
 
-    val statusText = elapsedText.ifBlank {
-        val clock = String.format(Locale.US, "%02d:%02d:%02d", elapsedSeconds / 3600, (elapsedSeconds % 3600) / 60, elapsedSeconds % 60)
-        "${if (listening) "กำลังบันทึก" else "พร้อมบันทึก"} • $clock"
-    }
-
+    val clock = String.format(Locale.US, "%02d:%02d:%02d", elapsedSeconds / 3600, (elapsedSeconds % 3600) / 60, elapsedSeconds % 60)
+    val statusText = "${if (listening) "กำลังบันทึก" else "พร้อมบันทึก"} • $clock"
     val fieldColors = OutlinedTextFieldDefaults.colors(
         focusedContainerColor = SurfaceWhite,
         unfocusedContainerColor = SurfaceWhite,
@@ -152,7 +142,7 @@ fun RecordingScreen(
                 OutlinedTextField(
                     value = title,
                     onValueChange = onTitleChange,
-                    label = { Text("ชื่อโน้ต (ไม่บังคับ)") },
+                    label = { Text("ชื่อโน้ต") },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
                     colors = fieldColors,
@@ -162,7 +152,7 @@ fun RecordingScreen(
                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    folderOptions.forEach { option ->
+                    DefaultFolders.forEach { option ->
                         val selected = folder == option
                         FilterChip(
                             selected = selected,
@@ -175,7 +165,7 @@ fun RecordingScreen(
                 OutlinedTextField(
                     value = folder,
                     onValueChange = onFolderChange,
-                    label = { Text("โฟลเดอร์ (ไม่บังคับ)") },
+                    label = { Text("โฟลเดอร์") },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
                     colors = fieldColors,
@@ -187,11 +177,12 @@ fun RecordingScreen(
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("อารมณ์ตอนนี้", style = MaterialTheme.typography.titleMedium, color = TextPrimary)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                moodOptions.forEach { option ->
+                DefaultMoods.forEach { option ->
                     val selected = mood == option
                     val style = moodStyle(option)
                     Surface(
-                        modifier = Modifier.weight(1f).clip(RoundedCornerShape(18.dp)).clickable { onMoodChange(option) },
+                        onClick = { onMoodChange(option) },
+                        modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(18.dp),
                         color = if (selected) Color(0xFFF6E2DF) else Color(0xFFF3EEEB),
                         border = BorderStroke(if (selected) 1.5.dp else 1.dp, if (selected) PrimaryCoral else BorderSoft),
@@ -217,43 +208,28 @@ fun RecordingScreen(
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(top = 6.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             CircleIconButton(48.dp, "ตั้งชื่อโน้ตและโฟลเดอร์", if (showMetaEditor) SurfaceTonal else SurfaceWhite, bordered = true, onClick = { showMetaEditor = !showMetaEditor }) {
                 BookmarkOutlineIcon(TextPrimary, Modifier.size(20.dp))
             }
-            Box(
-                modifier = Modifier
-                    .size(72.dp)
-                    .clip(CircleShape)
-                    .background(Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral)))
-                    .clickable { onToggleMic() }
-                    .semantics { contentDescription = if (listening) "หยุดรับเสียง" else "เริ่มพูดภาษาไทย" },
-                contentAlignment = Alignment.Center,
-            ) {
-                if (listening) PauseBarsIcon(SurfaceWhite, Modifier.size(28.dp)) else MicOutlineIcon(SurfaceWhite, Modifier.size(30.dp))
+            CircleIconButton(72.dp, if (listening) "หยุดรับเสียง" else "เริ่มพูดภาษาไทย", onClick = onToggleMic) {
+                Box(
+                    modifier = Modifier.fillMaxSize().background(Brush.linearGradient(listOf(PrimaryCoralLight, PrimaryCoral))),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (listening) PauseBarsIcon(SurfaceWhite, Modifier.size(28.dp)) else MicOutlineIcon(SurfaceWhite, Modifier.size(30.dp))
+                }
             }
-            CircleIconButton(48.dp, "บันทึกโน้ต", SurfaceWhite, bordered = true, onClick = onSave) {
-                StopSquareIcon(TextPrimary, Modifier.size(16.dp))
+            Surface(onClick = onSave, shape = RoundedCornerShape(16.dp), color = Color.Transparent) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Surface(Modifier.size(48.dp), shape = CircleShape, color = SurfaceWhite, border = BorderStroke(1.dp, BorderSoft)) {
+                        Box(contentAlignment = Alignment.Center) { StopSquareIcon(TextPrimary, Modifier.size(16.dp)) }
+                    }
+                    Text("บันทึกโน้ต", style = MaterialTheme.typography.labelSmall, color = TextSecondary)
+                }
             }
         }
     }
-}
-
-@Composable
-private fun CircleIconButton(
-    size: Dp,
-    description: String,
-    bg: Color = Color.Transparent,
-    bordered: Boolean = false,
-    onClick: () -> Unit,
-    icon: @Composable () -> Unit,
-) {
-    Surface(
-        modifier = Modifier.size(size).clip(CircleShape).clickable(onClick = onClick).semantics { contentDescription = description },
-        shape = CircleShape,
-        color = bg,
-        border = if (bordered) BorderStroke(1.dp, BorderSoft) else null,
-    ) { Box(contentAlignment = Alignment.Center) { icon() } }
 }
