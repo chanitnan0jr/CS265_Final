@@ -32,8 +32,8 @@ internal object TranscriptionClient {
         }
         try {
             connection.outputStream.buffered().use { out ->
-                writeField(out, boundary, "language", language)
-                writeFile(out, boundary, "file", fileName, mimeType, audio)
+                writeField(out, boundary, language)
+                writeFile(out, boundary, fileName, mimeType, audio)
                 out.write("--$boundary--\r\n".toByteArray(Charsets.UTF_8))
             }
             val code = connection.responseCode
@@ -47,7 +47,7 @@ internal object TranscriptionClient {
             throw e
         } catch (e: IOException) {
             throw e
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw TranscriptionException("รูปแบบข้อมูลจากเซิร์ฟเวอร์ไม่ถูกต้อง", retryable = false)
         } finally {
             connection.disconnect()
@@ -75,7 +75,7 @@ internal object TranscriptionClient {
             throw e
         } catch (e: IOException) {
             throw e
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw TranscriptionException("รูปแบบข้อมูลจากเซิร์ฟเวอร์ไม่ถูกต้อง", retryable = false)
         } finally {
             connection.disconnect()
@@ -102,7 +102,7 @@ internal object TranscriptionClient {
     private fun open(url: String, configure: HttpURLConnection.() -> Unit = {}): HttpURLConnection {
         val connection = try {
             URL(url).openConnection() as HttpURLConnection
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw TranscriptionException("ที่อยู่เซิร์ฟเวอร์ไม่ถูกต้อง", retryable = false)
         }
         return connection.apply {
@@ -113,14 +113,14 @@ internal object TranscriptionClient {
         }
     }
 
-    private fun writeField(out: OutputStream, boundary: String, name: String, value: String) {
-        out.write("--$boundary\r\nContent-Disposition: form-data; name=\"$name\"\r\n\r\n$value\r\n".toByteArray(Charsets.UTF_8))
+    private fun writeField(out: OutputStream, boundary: String, value: String) {
+        out.write("--$boundary\r\nContent-Disposition: form-data; name=\"language\"\r\n\r\n$value\r\n".toByteArray(Charsets.UTF_8))
     }
 
-    private fun writeFile(out: OutputStream, boundary: String, name: String, fileName: String, mimeType: String, audio: InputStream) {
+    private fun writeFile(out: OutputStream, boundary: String, fileName: String, mimeType: String, audio: InputStream) {
         val safeName = fileName.replace("\\", "_").replace("\"", "_").replace("\r", " ").replace("\n", " ").ifBlank { "audio" }
         val safeMime = mimeType.replace("\r", "").replace("\n", "").ifBlank { "application/octet-stream" }
-        out.write("--$boundary\r\nContent-Disposition: form-data; name=\"$name\"; filename=\"$safeName\"\r\nContent-Type: $safeMime\r\n\r\n".toByteArray(Charsets.UTF_8))
+        out.write("--$boundary\r\nContent-Disposition: form-data; name=\"file\"; filename=\"$safeName\"\r\nContent-Type: $safeMime\r\n\r\n".toByteArray(Charsets.UTF_8))
         audio.copyTo(out)
         out.write("\r\n".toByteArray(Charsets.UTF_8))
     }
@@ -143,10 +143,10 @@ internal object TranscriptionClient {
     }
 
     private fun httpError(code: Int): TranscriptionException {
-        val message = when {
-            code == HttpURLConnection.HTTP_UNAUTHORIZED || code == HttpURLConnection.HTTP_FORBIDDEN -> "เซิร์ฟเวอร์ปฏิเสธการเข้าถึง ($code)"
-            code == 413 -> "ไฟล์เสียงใหญ่เกินไป ($code)"
-            code in 400..499 -> "เซิร์ฟเวอร์ปฏิเสธคำขอ ($code)"
+        val message = when (code) {
+            HttpURLConnection.HTTP_UNAUTHORIZED, HttpURLConnection.HTTP_FORBIDDEN -> "เซิร์ฟเวอร์ปฏิเสธการเข้าถึง ($code)"
+            413 -> "ไฟล์เสียงใหญ่เกินไป ($code)"
+            in 400..499 -> "เซิร์ฟเวอร์ปฏิเสธคำขอ ($code)"
             else -> "เซิร์ฟเวอร์ขัดข้อง ($code)"
         }
         // 429 is temporary; 4xx input/job errors cannot be fixed by re-uploading.

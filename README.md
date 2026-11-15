@@ -31,7 +31,7 @@ transcriptionBaseUrl=https://your-server.example
 
 Alternatively pass `-PtranscriptionBaseUrl=https://your-server.example` to Gradle. Rebuild the app after changing the URL. Without a URL, uploads fail with a configuration message and can be retried after the app is rebuilt. Use HTTPS: Android blocks cleartext traffic by default.
 
-Uploaded audio leaves the device and is sent to that server. WorkManager continues the job when the user leaves the screen; note cards and the note detail screen show queued, processing, failed, and completed states, and failed jobs can be retried from the detail screen. For a note that already contains text, the transcript is appended rather than overwriting the text.
+Uploaded audio leaves the device and is sent to that server. Attaching audio from a note detail screen only adds the playback file and does not upload it. WorkManager continues the job when the user leaves the screen; note cards and the note detail screen show queued, processing, failed, and completed states, and failed jobs can be retried from the detail screen. For a note that already contains text, the transcript is appended rather than overwriting the text.
 
 ## Build and test
 

@@ -76,6 +76,7 @@ fun NoteDetailScreen(
     }
     val mediaPlayer = remember(playableUri) { if (playableUri != null) MediaPlayer() else null }
     var mediaReady by remember(playableUri) { mutableStateOf(false) }
+    var mediaError by remember(playableUri) { mutableStateOf(false) }
     var playing by remember(playableUri) { mutableStateOf(false) }
     var elapsedSeconds by remember(playableUri) { mutableIntStateOf(0) }
     var durationSeconds by remember(playableUri) { mutableIntStateOf(0) }
@@ -88,6 +89,7 @@ fun NoteDetailScreen(
                 mediaPlayer.setOnPreparedListener {
                     durationSeconds = (it.duration / 1000).coerceAtLeast(1)
                     mediaReady = true
+                    mediaError = false
                 }
                 mediaPlayer.setOnCompletionListener {
                     playing = false
@@ -96,12 +98,16 @@ fun NoteDetailScreen(
                 }
                 mediaPlayer.setOnErrorListener { _, _, _ ->
                     mediaReady = false
+                    mediaError = true
                     playing = false
                     true
                 }
                 mediaPlayer.setAudioSource(context, playableUri, DefaultMediaAttrs)
                 mediaPlayer.prepareAsync()
-            }.onFailure { mediaReady = false }
+            }.onFailure {
+                mediaReady = false
+                mediaError = true
+            }
         }
 
         onDispose { mediaPlayer?.release() }
@@ -123,15 +129,17 @@ fun NoteDetailScreen(
     }
 
     fun togglePlayback() {
-        if (playing) {
-            mediaPlayer?.pause()
+        if (mediaPlayer == null || playableUri == null || mediaError) {
+            onListenOriginal()
+        } else if (!mediaReady) {
+            // Still preparing; do not replace the audio the user is waiting for.
+        } else if (playing) {
+            mediaPlayer.pause()
             playing = false
-        } else if (mediaReady && mediaPlayer != null) {
+        } else {
             ensureAudibleMediaOutput(context, DefaultMediaAttrs)
             mediaPlayer.start()
             playing = true
-        } else {
-            onListenOriginal()
         }
     }
 

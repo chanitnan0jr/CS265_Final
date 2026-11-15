@@ -1,8 +1,8 @@
 package com.example.cs265final.transcription
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.cs265final.BuildConfig
@@ -12,6 +12,7 @@ import com.example.cs265final.data.contentDisplayName
 import com.example.cs265final.data.isPending
 import java.io.FileNotFoundException
 import java.io.IOException
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -51,10 +52,10 @@ class TranscriptionWorker(appContext: Context, params: WorkerParameters) : Corou
             Log.w(TAG, "Transcription failed (retryable=${e.retryable})")
             if (e.retryable && runAttemptCount < MAX_ATTEMPTS) Result.retry()
             else fail(storage, jobId, e.message ?: "ถอดข้อความไม่สำเร็จ")
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             Log.w(TAG, "Transcription cannot read the audio file")
             fail(storage, jobId, "ไม่สามารถเข้าถึงไฟล์เสียงได้ กรุณาเลือกไฟล์อีกครั้ง")
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             Log.w(TAG, "Transcription network error")
             if (runAttemptCount < MAX_ATTEMPTS) Result.retry()
             else fail(storage, jobId, "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้")
@@ -64,16 +65,16 @@ class TranscriptionWorker(appContext: Context, params: WorkerParameters) : Corou
         }
     }
 
-    private suspend fun transcribe(baseUrl: String, audioUri: String): TranscriptionResponse = withContext(Dispatchers.IO) {
-        val uri = Uri.parse(audioUri)
+    private suspend fun transcribe(baseUrl: String, audioUri: String): TranscriptionResponse = withContext<TranscriptionResponse>(Dispatchers.IO) {
+        val uri = audioUri.toUri()
         val resolver = applicationContext.contentResolver
         val fileName = contentDisplayName(resolver, uri) ?: "audio"
         val mimeType = resolver.getType(uri) ?: TranscriptionClient.mimeTypeFor(fileName)
         val input = try {
             resolver.openInputStream(uri)
-        } catch (e: FileNotFoundException) {
+        } catch (_: FileNotFoundException) {
             throw TranscriptionException("ไม่พบไฟล์เสียงหรือไฟล์ถูกย้ายแล้ว", retryable = false)
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             throw TranscriptionException("ไม่สามารถเข้าถึงไฟล์เสียงได้ กรุณาเลือกไฟล์อีกครั้ง", retryable = false)
         }
         val remoteJob = input?.use { stream ->
@@ -81,7 +82,7 @@ class TranscriptionWorker(appContext: Context, params: WorkerParameters) : Corou
         } ?: throw TranscriptionException("ไม่สามารถเปิดไฟล์เสียงได้", retryable = false)
 
         var waited = 0L
-        while (true) {
+        while (waited <= MAX_POLL_MS) {
             if (isStopped) throw TranscriptionException("งานถูกหยุดชั่วคราว", retryable = true)
             val response = TranscriptionClient.poll(baseUrl, remoteJob)
             when (response.status) {
@@ -90,11 +91,10 @@ class TranscriptionWorker(appContext: Context, params: WorkerParameters) : Corou
                 "queued", "processing" -> Unit
                 else -> throw TranscriptionException("สถานะงานจากเซิร์ฟเวอร์ไม่ถูกต้อง", retryable = false)
             }
-            if (waited >= MAX_POLL_MS) throw TranscriptionException("ใช้เวลาถอดข้อความนานเกินไป", retryable = false)
-            delay(POLL_INTERVAL_MS)
+            delay(POLL_INTERVAL_MS.milliseconds)
             waited += POLL_INTERVAL_MS
         }
-        throw TranscriptionException("ไม่สามารถถอดข้อความได้", retryable = false)
+        throw TranscriptionException("ใช้เวลาถอดข้อความนานเกินไป", retryable = false)
     }
 
     private fun fail(storage: NoteStorage, jobId: String, message: String): Result {
