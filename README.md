@@ -40,10 +40,12 @@ export JAVA_HOME=/opt/android-studio/jbr
 ./gradlew :app:connectedDebugAndroidTest
 ```
 
-- **Verified on 2026-11-17:** `22` JVM unit tests (`testDebugUnitTest`) and `28` connected instrumented tests (`connectedDebugAndroidTest` on `Medium_Phone` Android 17 / API 37 emulator) pass with 0 failures and 0 skips.
+- **Verified on 2026-11-17:** `22` JVM unit tests (`testDebugUnitTest`) and `29` connected instrumented tests (`connectedDebugAndroidTest` on `Medium_Phone` Android 17 / API 37 emulator) pass with 0 failures and 0 skips.
 
 ## CS265 Documentation & Evidence
 
+- [Consolidated Final Report (REQ-5.4 draft)](docs/final-report.md)
+- [Presentation Deck Outline & Code Walkthrough Guide](evidence/presentation/presentation-outline.md)
 - [Feature Inventory (REQ-1.1)](docs/feature-inventory.md)
 - [Test Cases & Results (REQ-1.2)](docs/test-cases.md)
 - [Course & Cross-Course Mapping (REQ-1.3–1.4)](docs/course-mapping.md)

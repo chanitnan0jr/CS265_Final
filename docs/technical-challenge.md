@@ -30,8 +30,8 @@ In `LibraryView.renderFolders()`, rows with an odd trailing folder appended a `n
 - **Why It Fixes the Cause:** `android.widget.Space` overrides `onMeasure` using `getDefaultSize2()`, which returns `Math.min(size, specSize)` (`0`) under `MeasureSpec.AT_MOST`, keeping the row height equal to the sibling folder card (`84dp`).
 
 ### 4. After-Fix Verification (`REQ-2.4`)
-- **Executed Test:** `./gradlew :app:connectedDebugAndroidTest` (`CompatibilityAndFolderTest` and all 28 connected tests).
-- **Result:** Passed (`28/28` passed, `0` failed). Notes below odd folder counts (e.g., 1 folder `"ทั่วไป"` and 5 folders in `evidence/screens/04-library-folders.png`) now measure and display at full height immediately.
+- **Executed Test:** `./gradlew :app:connectedDebugAndroidTest` (`CompatibilityAndFolderTest` and all 29 connected tests).
+- **Result:** Passed (`29/29` passed, `0` failed). Notes below odd folder counts (e.g., 1 folder `"ทั่วไป"` and 5 folders in `evidence/screens/04-library-folders.png`) now measure and display at full height immediately.
 - **After Evidence:** `evidence/challenge/after-connected-tests.xml` and `evidence/screens/04-library-folders.png`.
 
 ---
