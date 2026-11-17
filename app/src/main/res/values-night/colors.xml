@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Core semantic palette (Dark / Night) -->
+    <color name="app_background">#FF181414</color>
+    <color name="surface_card">#FF251F1E</color>
+    <color name="surface_tonal">#FF332927</color>
+    <color name="surface_nav">#FF211B1A</color>
+    <color name="text_primary">#FFF5ECE8</color>
+    <color name="text_secondary">#FFC9BCB8</color>
+    <color name="border_soft">#FF463A38</color>
+    <color name="primary_coral">#FFE4958A</color>
+    <color name="primary_coral_soft">#FF4B302C</color>
+    <color name="on_primary_coral">#FF1D1514</color>
+    <color name="secondary_rose">#FFD69C94</color>
+    <color name="status_error">#FFF2B8B5</color>
+    <color name="recording_dot">#FFFF6B66</color>
+
+    <!-- Folder card tints (dark) -->
+    <color name="folder_tint_study">#FF312A38</color>
+    <color name="folder_tint_feelings">#FF3A2928</color>
+    <color name="folder_tint_work">#FF382E26</color>
+    <color name="folder_tint_ideas">#FF29332A</color>
+    <color name="folder_tint_default">#FF332927</color>
+</resources>

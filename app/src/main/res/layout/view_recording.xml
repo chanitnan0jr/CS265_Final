@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/screen_horizontal_padding"
+    android:paddingEnd="@dimen/screen_horizontal_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_recording_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_circle_tonal"
+            android:contentDescription="@string/recording_back_desc"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="←"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/recording_title"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_recording_toggle_meta"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/recording_meta_toggle_desc"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/note_options_symbol"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_tonal_card"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="14dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view_recording_status_dot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/bg_circle_coral" />
+
+            <TextView
+                android:id="@+id/text_recording_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.example.cs265final.ui.WaveformView
+            android:id="@+id/waveform_recording"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/input_recording_transcript"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_input_box"
+        android:gravity="top|start"
+        android:hint="@string/recording_transcript_hint"
+        android:inputType="textMultiLine|textCapSentences"
+        android:lineSpacingExtra="4dp"
+        android:minHeight="180dp"
+        android:padding="16dp"
+        android:saveEnabled="false"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_recording_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_tonal_card"
+        android:paddingStart="14dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/secondary_rose"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/recording_meta_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/input_recording_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_box"
+            android:hint="@string/recording_note_title_hint"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:minHeight="@dimen/min_touch_target"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:saveEnabled="false"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="15sp" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/recording_folders_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <EditText
+            android:id="@+id/input_recording_folder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input_box"
+            android:hint="@string/recording_folder_hint"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minHeight="@dimen/min_touch_target"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:saveEnabled="false"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/recording_mood_label"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/recording_moods_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_recording_bookmark"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_circle_tonal"
+            android:contentDescription="@string/recording_meta_toggle_desc"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="Aa"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="24dp"
+            android:layout_height="1dp" />
+
+        <ImageButton
+            android:id="@+id/button_recording_mic"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/bg_circle_coral"
+            android:contentDescription="@string/recording_mic_start_desc"
+            android:src="@android:drawable/ic_btn_speak_now"
+            android:tint="@color/on_primary_coral" />
+
+        <Space
+            android:layout_width="24dp"
+            android:layout_height="1dp" />
+
+        <Button
+            android:id="@+id/button_recording_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_secondary_pill"
+            android:minHeight="@dimen/min_touch_target"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/recording_save"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

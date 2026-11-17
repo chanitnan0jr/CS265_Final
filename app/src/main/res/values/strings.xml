@@ -1,3 +1,200 @@
 <resources>
     <string name="app_name">Voice2Note</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">หน้าหลัก</string>
+    <string name="nav_library">คลังโน้ต</string>
+    <string name="nav_calendar">บันทึกรายวัน</string>
+    <string name="nav_search">ค้นหา</string>
+
+    <!-- Home -->
+    <string name="home_prompt">วันนี้อยากบันทึกอะไร?</string>
+    <string name="home_description">พูดได้เลย ไม่ว่าจะเป็นความคิด ความรู้สึก หรือโน้ตการเรียน</string>
+    <string name="home_record">เริ่มบันทึกเสียง</string>
+    <string name="home_upload">อัปโหลดไฟล์เสียง</string>
+    <string name="home_new_note">สร้างโน้ตใหม่</string>
+    <string name="home_recent_notes">บันทึกล่าสุด</string>
+    <string name="home_view_all">ดูทั้งหมด</string>
+    <string name="home_empty">ยังไม่มีโน้ต เริ่มเล่าเรื่องของคุณได้เลย</string>
+
+    <!-- Search -->
+    <string name="search_title">ค้นหา</string>
+    <string name="search_hint">ค้นหาชื่อหรือข้อความ</string>
+    <string name="search_no_results">ไม่พบโน้ตที่ตรงกับคำค้นหา</string>
+    <string name="search_no_notes_yet">ยังไม่มีโน้ตที่บันทึกไว้</string>
+    <string name="search_scope_label">ขอบเขตโฟลเดอร์</string>
+    <string name="search_folder_all">ทุกโฟลเดอร์</string>
+    <string name="search_result_count">พบ %1$d รายการ</string>
+
+    <!-- Note cards & actions -->
+    <string name="note_options_symbol" translatable="false">⋮</string>
+    <string name="note_options">ตัวเลือก %1$s</string>
+    <string name="note_delete_action">ลบโน้ต</string>
+    <string name="note_move_folder_action">ย้ายโฟลเดอร์</string>
+    <string name="note_date_folder">%1$s • %2$s</string>
+    <string name="note_status_queued">รอถอดข้อความ</string>
+    <string name="note_status_processing">กำลังถอดข้อความ...</string>
+    <string name="note_status_failed">ถอดข้อความไม่สำเร็จ</string>
+    <string name="delete_note_title">ลบโน้ตนี้หรือไม่?</string>
+    <string name="delete_note_message">โน้ต “%1$s” จะถูกลบ</string>
+    <string name="delete_note_confirm">ลบ</string>
+    <string name="delete_note_cancel">ยกเลิก</string>
+    <string name="delete_note_failed">ไม่สามารถลบโน้ตได้ กรุณาลองอีกครั้ง</string>
+    <string name="delete_note_not_found">ไม่พบโน้ตที่ต้องการลบ</string>
+
+    <!-- Library & Folders -->
+    <string name="library_title">คลังโน้ต</string>
+    <string name="library_search_desc">ไปที่หน้าค้นหา</string>
+    <string name="library_filter_all">ทั้งหมด</string>
+    <string name="library_filter_recorded">เสียงที่บันทึก</string>
+    <string name="library_filter_uploaded">ไฟล์ที่อัปโหลด</string>
+    <string name="library_folders_heading">โฟลเดอร์</string>
+    <string name="library_new_folder">+ โฟลเดอร์ใหม่</string>
+    <string name="library_show_all_folders">แสดงทั้งหมด</string>
+    <string name="library_recent_notes">โน้ตล่าสุด</string>
+    <string name="library_in_folder">โน้ตในโฟลเดอร์: %1$s</string>
+    <string name="library_empty">ยังไม่มีโน้ตในหมวดนี้</string>
+    <string name="library_folder_scope_note">โฟลเดอร์ใช้จัดกลุ่มโน้ต (แยกจากการเล่นไฟล์เสียงเดี่ยว)</string>
+    <string name="folder_item_count">%1$d รายการ</string>
+    <string name="folder_options_desc">ตัวเลือกโฟลเดอร์ %1$s</string>
+    <string name="folder_rename_action">เปลี่ยนชื่อโฟลเดอร์</string>
+    <string name="folder_delete_action">ลบโฟลเดอร์</string>
+    <string name="folder_create_title">สร้างโฟลเดอร์ใหม่</string>
+    <string name="folder_rename_title">เปลี่ยนชื่อโฟลเดอร์</string>
+    <string name="folder_name_hint">ชื่อโฟลเดอร์</string>
+    <string name="folder_name_empty_error">กรุณาใส่ชื่อโฟลเดอร์</string>
+    <string name="folder_name_duplicate_error">มีโฟลเดอร์ชื่อนี้อยู่แล้ว</string>
+    <string name="folder_save_action">บันทึก</string>
+    <string name="folder_cancel_action">ยกเลิก</string>
+    <string name="folder_delete_title">ลบโฟลเดอร์นี้หรือไม่?</string>
+    <string name="folder_delete_message">ลบโฟลเดอร์ “%1$s”? โน้ตในโฟลเดอร์นี้จะถูกย้ายไปยัง “%2$s”</string>
+    <string name="folder_delete_confirm">ลบโฟลเดอร์</string>
+    <string name="folder_delete_failed">ไม่สามารถลบโฟลเดอร์ได้ กรุณาลองอีกครั้ง</string>
+    <string name="folder_rename_failed">ไม่สามารถเปลี่ยนชื่อโฟลเดอร์ได้</string>
+    <string name="folder_create_failed">ไม่สามารถสร้างโฟลเดอร์ได้</string>
+    <string name="folder_move_title">ย้ายไปยังโฟลเดอร์</string>
+    <string name="folder_moved_toast">ย้ายโน้ตไปยัง “%1$s” แล้ว</string>
+    <string name="folder_move_failed">ไม่สามารถย้ายโฟลเดอร์ได้</string>
+
+    <!-- Default folder display labels (localized in UI while preserving stored keys) -->
+    <string name="folder_general">ทั่วไป</string>
+    <string name="folder_study">การเรียน</string>
+    <string name="folder_feelings">ระบายความรู้สึก</string>
+    <string name="folder_work">งาน / โปรเจกต์</string>
+    <string name="folder_ideas">ไอเดีย</string>
+    <string name="folder_uploaded">ไฟล์ที่อัปโหลด</string>
+
+    <!-- Calendar -->
+    <string name="calendar_title">บันทึกรายวัน</string>
+    <string name="calendar_today">วันนี้</string>
+    <string name="calendar_prev_month_desc">เดือนก่อนหน้า</string>
+    <string name="calendar_next_month_desc">เดือนถัดไป</string>
+    <string name="calendar_notes_on_date">บันทึกวันที่ %1$s</string>
+    <string name="calendar_empty">ไม่มีโน้ตในวันนี้</string>
+    <string name="calendar_new_note_desc">สร้างโน้ตใหม่</string>
+    <string name="weekday_sun">อา</string>
+    <string name="weekday_mon">จ</string>
+    <string name="weekday_tue">อ</string>
+    <string name="weekday_wed">พ</string>
+    <string name="weekday_thu">พฤ</string>
+    <string name="weekday_fri">ศ</string>
+    <string name="weekday_sat">ส</string>
+
+    <!-- Recording -->
+    <string name="recording_title">บันทึกเสียง (ถอดข้อความสด)</string>
+    <string name="recording_back_desc">กลับ</string>
+    <string name="recording_meta_toggle_desc">แก้ไขชื่อโน้ตและโฟลเดอร์</string>
+    <string name="recording_status_listening">กำลังบันทึก • %1$s</string>
+    <string name="recording_status_ready">พร้อมบันทึก • %1$s</string>
+    <string name="recording_transcript_hint">พูดได้เลย เราจะช่วยจดให้...</string>
+    <string name="recording_note_title_hint">ชื่อโน้ต</string>
+    <string name="recording_folder_hint">โฟลเดอร์</string>
+    <string name="recording_mood_label">อารมณ์ตอนนี้</string>
+    <string name="recording_mic_start_desc">เริ่มพูดภาษาไทย</string>
+    <string name="recording_mic_stop_desc">หยุดรับเสียง</string>
+    <string name="recording_save">บันทึกโน้ต</string>
+    <string name="recording_default_title">โน้ตของฉัน</string>
+    <string name="recording_error_still_listening">กรุณาหยุดรับเสียงและรอข้อความก่อนบันทึก</string>
+    <string name="recording_error_empty_transcript">เพิ่มข้อความก่อนบันทึก</string>
+    <string name="recording_error_save_audio">ไม่สามารถบันทึกไฟล์เสียงได้ กรุณาลองอีกครั้ง</string>
+    <string name="recording_error_save_note">ไม่สามารถบันทึกโน้ตได้ กรุณาลองอีกครั้ง</string>
+
+    <!-- Mood display labels -->
+    <string name="mood_very_good">ดีมาก</string>
+    <string name="mood_good">ดี</string>
+    <string name="mood_normal">ปกติ</string>
+    <string name="mood_stressed">เครียด</string>
+    <string name="mood_sad">เศร้า</string>
+
+    <!-- Discard unsaved draft dialog -->
+    <string name="discard_draft_title">ยกเลิกโน้ตที่กำลังเขียน?</string>
+    <string name="discard_draft_message">ข้อความหรือเสียงที่ยังไม่ได้บันทึกจะหายไป</string>
+    <string name="discard_draft_confirm">ทิ้งฉบับร่าง</string>
+    <string name="discard_draft_cancel">เขียนต่อ</string>
+
+    <!-- Note Detail -->
+    <string name="detail_back_desc">กลับ</string>
+    <string name="detail_options_desc">ตัวเลือกโน้ต</string>
+    <string name="detail_rename_action">แก้ไขชื่อโน้ต</string>
+    <string name="detail_rename_hint">ชื่อโน้ต</string>
+    <string name="detail_rename_save">บันทึกชื่อ</string>
+    <string name="detail_rename_cancel">ยกเลิก</string>
+    <string name="detail_rename_empty_error">กรุณาใส่ชื่อโน้ต</string>
+    <string name="detail_rename_failed">ไม่สามารถบันทึกชื่อโน้ตได้ กรุณาลองอีกครั้ง</string>
+    <string name="detail_status_queued">รอถอดข้อความ...</string>
+    <string name="detail_status_processing">กำลังถอดข้อความ...</string>
+    <string name="detail_status_failed">ถอดข้อความไม่สำเร็จ</string>
+    <string name="detail_retry_transcription">ลองอีกครั้ง</string>
+    <string name="detail_listen_original">ฟังเสียงต้นฉบับ</string>
+    <string name="detail_stop_listening">หยุดเล่นเสียง</string>
+    <string name="detail_attach_audio">แนบไฟล์เสียง</string>
+    <string name="detail_copy_text">คัดลอกข้อความ</string>
+    <string name="detail_copied">คัดลอกแล้ว</string>
+    <string name="detail_edit">แก้ไข</string>
+    <string name="detail_share">แชร์</string>
+
+    <!-- Playback -->
+    <string name="playback_back">‹ กลับ</string>
+    <string name="playback_title">ฟังไฟล์เสียง</string>
+    <string name="playback_loading">กำลังเปิดไฟล์เสียง...</string>
+    <string name="playback_play">เล่น</string>
+    <string name="playback_pause">หยุดชั่วคราว</string>
+    <string name="playback_error_play">ไม่สามารถเล่นไฟล์เสียงนี้ได้</string>
+    <string name="playback_error_open">ไม่สามารถเปิดไฟล์เสียงนี้ได้</string>
+    <string name="playback_word_sync_note">การแสดงคำตามเสียงต้องใช้ข้อความที่มีเวลาแต่ละคำ (เล่นเฉพาะไฟล์ที่เลือก)</string>
+
+    <!-- Speech & Permissions -->
+    <string name="speech_legacy_prompt">พูดภาษาไทยเพื่อบันทึกข้อความและเสียง</string>
+    <string name="speech_unavailable">อุปกรณ์นี้ไม่มีบริการแปลงเสียงเป็นข้อความ</string>
+    <string name="speech_error_retry">ไม่สามารถรับเสียงได้ ลองอีกครั้งหรือพิมพ์ข้อความแทน</string>
+    <string name="speech_start_failed">ไม่สามารถเริ่มรับเสียงได้ กรุณาตรวจสอบสิทธิ์ไมโครโฟนและบริการเสียง</string>
+    <string name="speech_stop_failed">ไม่สามารถหยุดรับเสียงได้ ข้อความที่ได้ยังอยู่</string>
+    <string name="speech_timeout">บริการเสียงไม่ตอบสนอง ข้อความที่ได้ยังอยู่ ลองอีกครั้งได้</string>
+    <string name="permission_mic_rationale">กรุณาอนุญาตไมโครโฟนเพื่อใช้การบันทึกเสียง</string>
+    <string name="permission_mic_settings">เปิดสิทธิ์ไมโครโฟนในการตั้งค่าแอปเพื่อใช้การบันทึกเสียง</string>
+
+    <!-- Upload & Transcription -->
+    <string name="upload_permission_temp">ไม่สามารถเก็บสิทธิ์เข้าถึงไฟล์ได้ ไฟล์นี้จะเล่นได้ชั่วคราวเท่านั้น</string>
+    <string name="upload_attach_success">เพิ่มไฟล์เสียงแล้ว</string>
+    <string name="upload_save_failed">ไม่สามารถบันทึกไฟล์ลงในโน้ตได้</string>
+    <string name="upload_default_title">ไฟล์เสียงที่อัปโหลด</string>
+    <string name="upload_started">กำลังถอดข้อความในเบื้องหลัง</string>
+    <string name="transcription_error_missing_audio">ไม่พบไฟล์เสียงสำหรับถอดข้อความ</string>
+    <string name="transcription_error_no_server">ยังไม่ได้ตั้งค่าเซิร์ฟเวอร์ถอดข้อความ</string>
+    <string name="transcription_error_empty_result">ไม่พบข้อความในไฟล์เสียง</string>
+    <string name="transcription_error_save_failed">ไม่สามารถบันทึกข้อความได้</string>
+    <string name="transcription_error_generic">ถอดข้อความไม่สำเร็จ</string>
+    <string name="transcription_error_permission">ไม่สามารถเข้าถึงไฟล์เสียงได้ กรุณาเลือกไฟล์อีกครั้ง</string>
+    <string name="transcription_error_network">เชื่อมต่อเซิร์ฟเวอร์ไม่ได้</string>
+    <string name="transcription_error_open_file">ไม่สามารถเปิดไฟล์เสียงได้</string>
+    <string name="transcription_error_stopped">งานถูกหยุดชั่วคราว</string>
+    <string name="transcription_error_bad_status">สถานะงานจากเซิร์ฟเวอร์ไม่ถูกต้อง</string>
+    <string name="transcription_error_timeout">ใช้เวลาถอดข้อความนานเกินไป</string>
+
+    <!-- Storage & Exit Guard -->
+    <string name="storage_read_error">ไม่สามารถอ่านโน้ตที่บันทึกไว้ได้ ข้อมูลเดิมจะไม่ถูกเขียนทับ</string>
+    <string name="exit_confirm_title">ออกจาก Voice2Note?</string>
+    <string name="exit_confirm_message">คุณต้องการออกจากแอปหรือไม่?</string>
+    <string name="exit_confirm_yes">ออก</string>
+    <string name="exit_confirm_no">อยู่ต่อ</string>
 </resources>

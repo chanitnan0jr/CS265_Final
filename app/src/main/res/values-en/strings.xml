@@ -1,0 +1,199 @@
+<resources>
+    <string name="app_name">Voice2Note</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_library">Library</string>
+    <string name="nav_calendar">Journal</string>
+    <string name="nav_search">Search</string>
+
+    <!-- Home -->
+    <string name="home_prompt">What would you like to record today?</string>
+    <string name="home_description">Share your thoughts, feelings, or study notes.</string>
+    <string name="home_record">Start recording</string>
+    <string name="home_upload">Upload audio</string>
+    <string name="home_new_note">Create note</string>
+    <string name="home_recent_notes">Recent notes</string>
+    <string name="home_view_all">View all</string>
+    <string name="home_empty">No notes yet. Start telling your story.</string>
+
+    <!-- Search -->
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search titles or text</string>
+    <string name="search_no_results">No matching notes found</string>
+    <string name="search_no_notes_yet">No saved notes yet</string>
+    <string name="search_scope_label">Folder scope</string>
+    <string name="search_folder_all">All folders</string>
+    <string name="search_result_count">%1$d results</string>
+
+    <!-- Note cards & actions -->
+    <string name="note_options">Options for %1$s</string>
+    <string name="note_delete_action">Delete note</string>
+    <string name="note_move_folder_action">Move to folder</string>
+    <string name="note_date_folder">%1$s • %2$s</string>
+    <string name="note_status_queued">Waiting for transcription</string>
+    <string name="note_status_processing">Transcribing...</string>
+    <string name="note_status_failed">Transcription failed</string>
+    <string name="delete_note_title">Delete this note?</string>
+    <string name="delete_note_message">“%1$s” will be deleted.</string>
+    <string name="delete_note_confirm">Delete</string>
+    <string name="delete_note_cancel">Cancel</string>
+    <string name="delete_note_failed">Could not delete the note. Please try again.</string>
+    <string name="delete_note_not_found">The note could not be found.</string>
+
+    <!-- Library & Folders -->
+    <string name="library_title">Library</string>
+    <string name="library_search_desc">Open search</string>
+    <string name="library_filter_all">All</string>
+    <string name="library_filter_recorded">Recorded</string>
+    <string name="library_filter_uploaded">Uploaded</string>
+    <string name="library_folders_heading">Folders</string>
+    <string name="library_new_folder">+ New folder</string>
+    <string name="library_show_all_folders">Show all</string>
+    <string name="library_recent_notes">Recent notes</string>
+    <string name="library_in_folder">Folder: %1$s</string>
+    <string name="library_empty">No notes in this category yet</string>
+    <string name="library_folder_scope_note">Folders group notes by topic (separate from single-file audio playback)</string>
+    <string name="folder_item_count">%1$d items</string>
+    <string name="folder_options_desc">Options for folder %1$s</string>
+    <string name="folder_rename_action">Rename folder</string>
+    <string name="folder_delete_action">Delete folder</string>
+    <string name="folder_create_title">New folder</string>
+    <string name="folder_rename_title">Rename folder</string>
+    <string name="folder_name_hint">Folder name</string>
+    <string name="folder_name_empty_error">Please enter a folder name</string>
+    <string name="folder_name_duplicate_error">A folder with this name already exists</string>
+    <string name="folder_save_action">Save</string>
+    <string name="folder_cancel_action">Cancel</string>
+    <string name="folder_delete_title">Delete this folder?</string>
+    <string name="folder_delete_message">Delete folder “%1$s”? Notes inside will be moved to “%2$s”.</string>
+    <string name="folder_delete_confirm">Delete folder</string>
+    <string name="folder_delete_failed">Could not delete folder. Please try again.</string>
+    <string name="folder_rename_failed">Could not rename folder</string>
+    <string name="folder_create_failed">Could not create folder</string>
+    <string name="folder_move_title">Move to folder</string>
+    <string name="folder_moved_toast">Moved note to “%1$s”</string>
+    <string name="folder_move_failed">Could not move note to folder</string>
+
+    <!-- Default folder display labels -->
+    <string name="folder_general">General</string>
+    <string name="folder_study">Study</string>
+    <string name="folder_feelings">Reflections</string>
+    <string name="folder_work">Work / Projects</string>
+    <string name="folder_ideas">Ideas</string>
+    <string name="folder_uploaded">Uploaded audio</string>
+
+    <!-- Calendar -->
+    <string name="calendar_title">Daily Journal</string>
+    <string name="calendar_today">Today</string>
+    <string name="calendar_prev_month_desc">Previous month</string>
+    <string name="calendar_next_month_desc">Next month</string>
+    <string name="calendar_notes_on_date">Notes on %1$s</string>
+    <string name="calendar_empty">No notes on this date</string>
+    <string name="calendar_new_note_desc">Create new note</string>
+    <string name="weekday_sun">Sun</string>
+    <string name="weekday_mon">Mon</string>
+    <string name="weekday_tue">Tue</string>
+    <string name="weekday_wed">Wed</string>
+    <string name="weekday_thu">Thu</string>
+    <string name="weekday_fri">Fri</string>
+    <string name="weekday_sat">Sat</string>
+
+    <!-- Recording -->
+    <string name="recording_title">Voice Recording (Live Transcript)</string>
+    <string name="recording_back_desc">Back</string>
+    <string name="recording_meta_toggle_desc">Edit note title and folder</string>
+    <string name="recording_status_listening">Recording • %1$s</string>
+    <string name="recording_status_ready">Ready • %1$s</string>
+    <string name="recording_transcript_hint">Speak naturally, we will transcribe for you...</string>
+    <string name="recording_note_title_hint">Note title</string>
+    <string name="recording_folder_hint">Folder</string>
+    <string name="recording_mood_label">Current mood</string>
+    <string name="recording_mic_start_desc">Start speaking Thai</string>
+    <string name="recording_mic_stop_desc">Stop listening</string>
+    <string name="recording_save">Save note</string>
+    <string name="recording_default_title">My Note</string>
+    <string name="recording_error_still_listening">Please stop listening before saving</string>
+    <string name="recording_error_empty_transcript">Please enter transcript text before saving</string>
+    <string name="recording_error_save_audio">Could not save audio file. Please try again.</string>
+    <string name="recording_error_save_note">Could not save note. Please try again.</string>
+
+    <!-- Mood display labels -->
+    <string name="mood_very_good">Very Good</string>
+    <string name="mood_good">Good</string>
+    <string name="mood_normal">Normal</string>
+    <string name="mood_stressed">Stressed</string>
+    <string name="mood_sad">Sad</string>
+
+    <!-- Discard unsaved draft dialog -->
+    <string name="discard_draft_title">Discard unsaved draft?</string>
+    <string name="discard_draft_message">Your unsaved transcript or recording will be lost.</string>
+    <string name="discard_draft_confirm">Discard</string>
+    <string name="discard_draft_cancel">Keep editing</string>
+
+    <!-- Note Detail -->
+    <string name="detail_back_desc">Back</string>
+    <string name="detail_options_desc">Note options</string>
+    <string name="detail_rename_action">Rename note</string>
+    <string name="detail_rename_hint">Note title</string>
+    <string name="detail_rename_save">Save title</string>
+    <string name="detail_rename_cancel">Cancel</string>
+    <string name="detail_rename_empty_error">Please enter a note title</string>
+    <string name="detail_rename_failed">Could not save note title. Please try again.</string>
+    <string name="detail_status_queued">Waiting for transcription...</string>
+    <string name="detail_status_processing">Transcribing...</string>
+    <string name="detail_status_failed">Transcription failed</string>
+    <string name="detail_retry_transcription">Retry</string>
+    <string name="detail_listen_original">Listen to audio</string>
+    <string name="detail_stop_listening">Stop playback</string>
+    <string name="detail_attach_audio">Attach audio file</string>
+    <string name="detail_copy_text">Copy text</string>
+    <string name="detail_copied">Copied</string>
+    <string name="detail_edit">Edit</string>
+    <string name="detail_share">Share</string>
+
+    <!-- Playback -->
+    <string name="playback_back">‹ Back</string>
+    <string name="playback_title">Audio Playback</string>
+    <string name="playback_loading">Opening audio file...</string>
+    <string name="playback_play">Play</string>
+    <string name="playback_pause">Pause</string>
+    <string name="playback_error_play">Cannot play this audio file</string>
+    <string name="playback_error_open">Cannot open this audio file</string>
+    <string name="playback_word_sync_note">Word-level highlighting requires timed transcript segments (single-file playback)</string>
+
+    <!-- Speech & Permissions -->
+    <string name="speech_legacy_prompt">Speak Thai to record text and audio</string>
+    <string name="speech_unavailable">Speech recognition is unavailable on this device</string>
+    <string name="speech_error_retry">Could not capture speech. Try again or type manually.</string>
+    <string name="speech_start_failed">Could not start speech recognition. Check microphone permission and speech service.</string>
+    <string name="speech_stop_failed">Could not stop speech recognition. Your captured text is preserved.</string>
+    <string name="speech_timeout">Speech service timed out. Your captured text is preserved.</string>
+    <string name="permission_mic_rationale">Please grant microphone permission to record voice notes</string>
+    <string name="permission_mic_settings">Enable microphone permission in app settings to record voice notes</string>
+
+    <!-- Upload & Transcription -->
+    <string name="upload_permission_temp">Could not persist file permission. This audio will only play temporarily.</string>
+    <string name="upload_attach_success">Audio file attached</string>
+    <string name="upload_save_failed">Could not save audio file to the note</string>
+    <string name="upload_default_title">Uploaded audio</string>
+    <string name="upload_started">Transcribing in the background</string>
+    <string name="transcription_error_missing_audio">Audio file for transcription was not found</string>
+    <string name="transcription_error_no_server">Transcription server URL is not configured</string>
+    <string name="transcription_error_empty_result">No speech text found in the audio file</string>
+    <string name="transcription_error_save_failed">Could not save transcription text</string>
+    <string name="transcription_error_generic">Transcription failed</string>
+    <string name="transcription_error_permission">Cannot access the audio file. Please pick it again.</string>
+    <string name="transcription_error_network">Cannot connect to the server</string>
+    <string name="transcription_error_open_file">Cannot open the audio file</string>
+    <string name="transcription_error_stopped">Job was paused</string>
+    <string name="transcription_error_bad_status">Invalid job status from server</string>
+    <string name="transcription_error_timeout">Transcription timed out</string>
+
+    <!-- Storage & Exit Guard -->
+    <string name="storage_read_error">Could not read saved notes. Existing data will not be overwritten.</string>
+    <string name="exit_confirm_title">Exit Voice2Note?</string>
+    <string name="exit_confirm_message">Are you sure you want to exit the app?</string>
+    <string name="exit_confirm_yes">Exit</string>
+    <string name="exit_confirm_no">Stay</string>
+</resources>
