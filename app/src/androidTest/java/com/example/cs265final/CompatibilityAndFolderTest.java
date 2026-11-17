@@ -12,6 +12,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -102,25 +104,46 @@ public class CompatibilityAndFolderTest {
       onView(withText("Podcasts")).check(matches(isDisplayed()));
       onView(withText("Lecture 1")).perform(scrollTo()).check(matches(isDisplayed()));
 
-      // Rename folder -> updates card and assigned note
+      // Rename folder -> updates card and assigned note (prefix match tolerates OEM Thai NBSP padding)
       String optionsDesc = context.getString(R.string.folder_options_desc, "Podcasts");
       onView(withContentDescription(optionsDesc)).perform(scrollTo(), click());
-      onView(withText(R.string.folder_rename_action)).inRoot(isPlatformPopup()).perform(click());
+      onView(withText(startsWith(context.getString(R.string.folder_rename_action))))
+          .inRoot(isPlatformPopup())
+          .perform(click());
       onView(withId(R.id.input_folder_name)).inRoot(isDialog()).perform(replaceText("AudioNotes"));
-      onView(withText(R.string.folder_save_action)).inRoot(isDialog()).perform(click());
+      onView(
+              allOf(
+                  withId(android.R.id.button1),
+                  withText(startsWith(context.getString(R.string.folder_save_action)))))
+          .inRoot(isDialog())
+          .perform(click());
       onView(withText("AudioNotes")).check(matches(isDisplayed()));
 
       // Delete folder Cancel -> folder remains
       String renamedDesc = context.getString(R.string.folder_options_desc, "AudioNotes");
       onView(withContentDescription(renamedDesc)).perform(scrollTo(), click());
-      onView(withText(R.string.folder_delete_action)).inRoot(isPlatformPopup()).perform(click());
-      onView(withText(R.string.folder_cancel_action)).inRoot(isDialog()).perform(click());
+      onView(withText(startsWith(context.getString(R.string.folder_delete_action))))
+          .inRoot(isPlatformPopup())
+          .perform(click());
+      onView(
+              allOf(
+                  withId(android.R.id.button2),
+                  withText(startsWith(context.getString(R.string.folder_cancel_action)))))
+          .inRoot(isDialog())
+          .perform(click());
       onView(withText("AudioNotes")).check(matches(isDisplayed()));
 
       // Delete folder Confirm -> folder removed and note moved to General
       onView(withContentDescription(renamedDesc)).perform(scrollTo(), click());
-      onView(withText(R.string.folder_delete_action)).inRoot(isPlatformPopup()).perform(click());
-      onView(withText(R.string.folder_delete_confirm)).inRoot(isDialog()).perform(click());
+      onView(withText(startsWith(context.getString(R.string.folder_delete_action))))
+          .inRoot(isPlatformPopup())
+          .perform(click());
+      onView(
+              allOf(
+                  withId(android.R.id.button1),
+                  withText(startsWith(context.getString(R.string.folder_delete_confirm)))))
+          .inRoot(isDialog())
+          .perform(click());
       onView(withText("AudioNotes")).check(doesNotExist());
       onView(withText("Lecture 1")).perform(scrollTo()).check(matches(isDisplayed()));
     }

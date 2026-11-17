@@ -8,6 +8,8 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -91,7 +93,12 @@ public class CalendarAndDetailTest {
             scroll.addView(view);
             activity.setContentView(scroll);
           });
-      onView(withText(R.string.calendar_empty)).check(matches(isDisplayed()));
+      onView(withId(R.id.text_calendar_empty))
+          .check(
+              matches(
+                  allOf(
+                      isDisplayed(),
+                      withText(startsWith(context.getString(R.string.calendar_empty))))));
     }
   }
 
