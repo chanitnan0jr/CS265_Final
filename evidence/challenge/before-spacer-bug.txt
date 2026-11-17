@@ -1,0 +1,35 @@
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+Starting 3 tests on Medium_Phone(AVD) - 17
+
+com.example.cs265final.CompatibilityAndFolderTest > folderRenameAndDeleteConfirmationPreserveOrMoveNotes[Medium_Phone(AVD) - 17] FAILED 
+	java.lang.AssertionError: Timed out waiting for note visible: containerH=0 measH=0 vis=0 rowH=0 rowMeasH=0 rowVis=0 tvH=0 tvMeasH=0 tvW=784 libH=2038 libAttached=true text=Lecture 1
+	at com.example.cs265final.CompatibilityAndFolderTest.waitForNoteVisible(CompatibilityAndFolderTest.java:168)
+Tests on Medium_Phone(AVD) - 17 failed: There was 1 failure(s).
+Finished 3 tests on Medium_Phone(AVD) - 17
+Execute com.example.cs265final.CompatibilityAndFolderTest.folderRenameAndDeleteConfirmationPreserveOrMoveNotes: FAILED
+java.lang.AssertionError: java.lang.AssertionError: Timed out waiting for note visible: containerH=0 measH=0 vis=0 rowH=0 rowMeasH=0 rowVis=0 tvH=0 tvMeasH=0 tvW=784 libH=2038 libAttached=true text=Lecture 1
+at com.example.cs265final.CompatibilityAndFolderTest.waitForNoteVisible(CompatibilityAndFolderTest.java:168)
+at com.example.cs265final.CompatibilityAndFolderTest.folderRenameAndDeleteConfirmationPreserveOrMoveNotes(CompatibilityAndFolderTest.java:123)
+
+java.lang.AssertionError: Timed out waiting for note visible: containerH=0 measH=0 vis=0 rowH=0 rowMeasH=0 rowVis=0 tvH=0 tvMeasH=0 tvW=784 libH=2038 libAttached=true text=Lecture 1
+at com.example.cs265final.CompatibilityAndFolderTest.waitForNoteVisible(CompatibilityAndFolderTest.java:168)
+at com.example.cs265final.CompatibilityAndFolderTest.folderRenameAndDeleteConfirmationPreserveOrMoveNotes(CompatibilityAndFolderTest.java:123)
+> Task :app:connectedDebugAndroidTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:connectedDebugAndroidTest' (registered by plugin 'com.android.internal.application').
+> There were failing tests. See the report at: file:///home/Sinu/AndroidStudioProjects/cs265Final/app/build/reports/androidTests/connected/debug/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 11s
+66 actionable tasks: 5 executed, 61 up-to-date
+Configuration cache entry reused.

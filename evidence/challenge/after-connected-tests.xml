@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="28" failures="0" errors="0" skipped="0" time="44.35" timestamp="2026-11-17T14:26:51" hostname="localhost">
+  <testsuite name="com.example.cs265final.CompatibilityAndFolderTest" tests="3" failures="0" errors="0" skipped="0" time="4.104" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="dayAndNightThemesResolveReadableContrastColors" classname="com.example.cs265final.CompatibilityAndFolderTest" time="0.013" />
+    <testcase name="folderRenameAndDeleteConfirmationPreserveOrMoveNotes" classname="com.example.cs265final.CompatibilityAndFolderTest" time="4.09" />
+    <testcase name="thaiAndEnglishResourcesResolveDistinctLabels" classname="com.example.cs265final.CompatibilityAndFolderTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.MainActivityFlowsTest" tests="3" failures="0" errors="0" skipped="0" time="14.911" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="backOnRecordingWithUnsavedDraftAsksConfirmationAndRecreatePreservesDraft" classname="com.example.cs265final.MainActivityFlowsTest" time="3.269" />
+    <testcase name="fullNoteCreateSearchDetailDeleteAndBackFlow" classname="com.example.cs265final.MainActivityFlowsTest" time="6.298" />
+    <testcase name="folderCreationAndScopedSearchFilterMatchingNotes" classname="com.example.cs265final.MainActivityFlowsTest" time="5.344" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.RecordingDraftTest" tests="1" failures="0" errors="0" skipped="0" time="1.807" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="capturedAudioSurvivesActivityRecreation" classname="com.example.cs265final.RecordingDraftTest" time="1.807" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.data.NoteStorageTest" tests="9" failures="0" errors="0" skipped="0" time="0.03" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="sourceRoundTripsAndLegacyAudioUrisMigrate" classname="com.example.cs265final.data.NoteStorageTest" time="0.0" />
+    <testcase name="renamedNotePersistsAndCanBeFoundByItsNewTitle" classname="com.example.cs265final.data.NoteStorageTest" time="0.0" />
+    <testcase name="malformedDataIsNotTreatedAsAnEmptyLibrary" classname="com.example.cs265final.data.NoteStorageTest" time="0.001" />
+    <testcase name="storedThaiNotesCanBeFilteredAfterReload" classname="com.example.cs265final.data.NoteStorageTest" time="0.001" />
+    <testcase name="deletingOneNoteKeepsAnotherNotesNewWorkerResult" classname="com.example.cs265final.data.NoteStorageTest" time="0.001" />
+    <testcase name="uiSaveKeepsAWorkerTranscriptionResult" classname="com.example.cs265final.data.NoteStorageTest" time="0.026" />
+    <testcase name="savedNotesSurviveNewStorageInstance" classname="com.example.cs265final.data.NoteStorageTest" time="0.0" />
+    <testcase name="folderCrudValidatesAndUpdatesAssignedNotes" classname="com.example.cs265final.data.NoteStorageTest" time="0.0" />
+    <testcase name="aStaleWorkerCannotUpdateAReplacementJob" classname="com.example.cs265final.data.NoteStorageTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.CalendarAndDetailTest" tests="2" failures="0" errors="0" skipped="0" time="4.968" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="detailRenameValidatesBlankTitleAndRetriesFailedTranscription" classname="com.example.cs265final.feature.CalendarAndDetailTest" time="3.136" />
+    <testcase name="calendarFiltersNotesBySelectedDateAndHandlesEmptyDay" classname="com.example.cs265final.feature.CalendarAndDetailTest" time="1.832" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.DeleteNoteConfirmationTest" tests="1" failures="0" errors="0" skipped="0" time="3.061" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="cancelConfirmAndBackCallOnlyTheirRespectiveActions" classname="com.example.cs265final.feature.DeleteNoteConfirmationTest" time="3.061" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.NoteDetailLifecycleTest" tests="1" failures="0" errors="0" skipped="0" time="4.666" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="backgroundPausesPlaybackUntilTheUserResumes" classname="com.example.cs265final.feature.NoteDetailLifecycleTest" time="4.666" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.PlaybackViewTest" tests="2" failures="0" errors="0" skipped="0" time="6.247" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="encodedPcmMp3CanBePreparedAndPlayed" classname="com.example.cs265final.feature.PlaybackViewTest" time="3.161" />
+    <testcase name="mp3CanBePreparedAndPlayed" classname="com.example.cs265final.feature.PlaybackViewTest" time="3.086" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.RecordingViewTest" tests="1" failures="0" errors="0" skipped="0" time="0.88" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="noteComposerForwardsInputAndActions" classname="com.example.cs265final.feature.RecordingViewTest" time="0.88" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.home.HomeViewTest" tests="2" failures="0" errors="0" skipped="0" time="1.482" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="actionsAndRecentNotesUseCurrentInstances" classname="com.example.cs265final.feature.home.HomeViewTest" time="1.456" />
+    <testcase name="rebindingUpdatesTheDisplayedWorkerStatus" classname="com.example.cs265final.feature.home.HomeViewTest" time="0.026" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.search.SearchControlsTest" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="reportsUserEditsButNotStateSynchronization" classname="com.example.cs265final.feature.search.SearchControlsTest" time="0.001" />
+  </testsuite>
+  <testsuite name="com.example.cs265final.feature.search.SearchResultViewTest" tests="2" failures="0" errors="0" skipped="0" time="1.659" timestamp="2026-11-17T14:26:51" hostname="localhost">
+    <properties>
+      <property name="device" value="Medium_Phone(AVD) - 17" />
+      <property name="flavor" value="" />
+      <property name="project" value=":app" />
+    </properties>
+    <testcase name="selectionAndMenuKeepTheOriginalNoteAcrossRebinding" classname="com.example.cs265final.feature.search.SearchResultViewTest" time="1.657" />
+    <testcase name="bindsTranscriptionStatusAndHidesBlankBody" classname="com.example.cs265final.feature.search.SearchResultViewTest" time="0.002" />
+  </testsuite>
+</testsuites>

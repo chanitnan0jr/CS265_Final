@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.cs265final.data.NoteFiltersTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-17T14:40:13.755Z" hostname="fedora" time="0.005">
+  <properties/>
+  <testcase name="folderScopedSearchCombinesQueryAndFolder" classname="com.example.cs265final.data.NoteFiltersTest" time="0.003"/>
+  <testcase name="audioSourceIsIndependentOfFolderName" classname="com.example.cs265final.data.NoteFiltersTest" time="0.0"/>
+  <testcase name="selectsTheExactNoteWhenValuesAreIdentical" classname="com.example.cs265final.data.NoteFiltersTest" time="0.0"/>
+  <testcase name="searchSupportsThaiAndDateBoundaries" classname="com.example.cs265final.data.NoteFiltersTest" time="0.001"/>
+  <testcase name="filtersByTextFolderAndDateTogether" classname="com.example.cs265final.data.NoteFiltersTest" time="0.0"/>
+  <testcase name="searchTrimsUnicodeSpacesAndHandlesEmptyRanges" classname="com.example.cs265final.data.NoteFiltersTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.cs265final.speech.SpeechDraftTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-17T14:40:13.761Z" hostname="fedora" time="0.001">
+  <properties/>
+  <testcase name="resultsReplacePartialsAndIgnoreCancelledSessions" classname="com.example.cs265final.speech.SpeechDraftTest" time="0.0"/>
+  <testcase name="whitespaceAndEmptyInputsMatchDraftJoiningRules" classname="com.example.cs265final.speech.SpeechDraftTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.cs265final.transcription.TranscriptionClientTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-17T14:40:13.766Z" hostname="fedora" time="0.031">
+  <properties/>
+  <testcase name="missingServerConfigurationIsNotRetried" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.004"/>
+  <testcase name="pollParsesFailedJob" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.016"/>
+  <testcase name="clientErrorsAreNotRetried" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.002"/>
+  <testcase name="pollParsesCompletedTranscriptAndNullFields" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.003"/>
+  <testcase name="serverErrorsAreRetryable" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.002"/>
+  <testcase name="mimeTypeFallsBackToTheFileExtension" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.0"/>
+  <testcase name="submitsMultipartAudioAndReturnsJobId" classname="com.example.cs265final.transcription.TranscriptionClientTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.cs265final.transcription.TranscriptionTextTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-17T14:40:13.798Z" hostname="fedora" time="0.001">
+  <properties/>
+  <testcase name="aFreshUploadGetsTheTranscript" classname="com.example.cs265final.transcription.TranscriptionTextTest" time="0.0"/>
+  <testcase name="aTypedBodyIsKeptAndTheTranscriptIsAppended" classname="com.example.cs265final.transcription.TranscriptionTextTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.cs265final.WavFileTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T14:40:13.643Z" hostname="fedora" time="0.109">
+  <properties/>
+  <testcase name="onlyManagedRecordingsAreEligibleForDeletion" classname="com.example.cs265final.WavFileTest" time="0.004"/>
+  <testcase name="resamplesMonoPcmTo16kHz" classname="com.example.cs265final.WavFileTest" time="0.009"/>
+  <testcase name="detectsAudibleNonZeroPcm" classname="com.example.cs265final.WavFileTest" time="0.001"/>
+  <testcase name="writesPcmHeaderAndPayload" classname="com.example.cs265final.WavFileTest" time="0.001"/>
+  <testcase name="writesMp3FrameStreamFromPcm" classname="com.example.cs265final.WavFileTest" time="0.087"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
