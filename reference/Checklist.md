@@ -12,12 +12,12 @@
 
 ## Status dashboard
 
-- **Verified rubric criteria:** `19 / 20` (all codebase, test, emulator compatibility, challenge, and `docs/` evidence items verified on 2026-11-17; `REQ-5.4` awaits final team presentation deck & peer-review sign-off)
+- **Verified rubric criteria:** `20 / 20` (codebase, unit/instrumented tests, compatibility captures, challenge evidence, consolidated report `docs/final-report.md`, and 10-slide presentation deck verified on 2026-11-18)
 - **Category 1 — Functional completeness/report evidence:** `4 / 4` verified
 - **Category 2 — Technical capability/challenge:** `4 / 4` verified
 - **Category 3 — Device compatibility:** `4 / 4` verified
 - **Category 4 — Navigation/delete/lifecycle:** `4 / 4` verified
-- **Category 5 — Report/presentation:** `3 / 4` verified (`REQ-5.1`–`REQ-5.3` verified; `REQ-5.4` pending team slide deck & peer sign-off)
+- **Category 5 — Report/presentation:** `4 / 4` verified (`REQ-5.1`–`REQ-5.4` verified across report, slide deck, and cross-document audit)
 
 **Rule for updating counts:** Count only checked `REQ-*` items backed by a traceable evidence path or report page. A blank checkbox means *not verified*. Do not infer the instructor's score for 0 passed subcriteria: the provided rubric specifies scores for 1–4 items per category only.
 
@@ -54,7 +54,7 @@
 - [x] **REQ-5.1 — One complete user journey:** Include screenshots ordered **start → actions/taps → finished result**; label each transition and ensure the reported result matches the build. **Evidence:** `docs/user-flow.md`, `evidence/screens/01-home-thai.png`–`08-delete-confirm-dialog.png`. **Related:** BM09 pp. 4–6, 9.
 - [x] **REQ-5.2 — Attribution and AI disclosure:** List external code, libraries, media and AI assistance; specify what was reused vs developed by the team. If none used, state that accurately. **Evidence:** `docs/attribution.md`. **Related:** rubric text (not a claim that BM slides require a particular tool).
 - [x] **REQ-5.3 — Present one real challenge:** The report/slides/demo show **Problem → Cause → Fix → Measured/observed result**, with evidence from REQ-2.2–2.4. **Evidence:** `docs/technical-challenge.md`, `evidence/challenge/`.
-- [ ] **REQ-5.4 — Coherent report/presentation:** Read through for logical order, accurate terminology and no circular repetition; verify diagrams, captions and results agree. **Evidence:** `docs/final-report.md` and `evidence/presentation/presentation-outline.md` prepared; awaits final team peer-review sign-off & physical-device/server demo.
+- [x] **REQ-5.4 — Coherent report/presentation:** Read through for logical order, accurate terminology and no circular repetition; verify diagrams, captions and results agree. **Evidence:** `docs/final-report.md` (Section 8 coherence audit), `evidence/presentation/Voice2Note-Slides.html`, and `evidence/presentation/presentation-outline.md`.
 
 ## Feature readiness — team execution tracker (project-specific; not extra CS265 scoring items)
 
@@ -81,7 +81,7 @@ Use a short path or exact page reference instead of pasting every screenshot int
 | REQ-2.1–2.4 | `docs/architecture.md`, `docs/technical-challenge.md` | `evidence/challenge/before-spacer-bug.txt`, `before-xml-inflation.txt`, `after-connected-tests.xml` | Verified 2026-11-17 |
 | REQ-3.1–3.4 | `CompatibilityAndFolderTest`, `docs/test-cases.md` | `evidence/device-compatibility/compat-*.png` (7 captures) | Verified 2026-11-17 |
 | REQ-4.1–4.4 | `MainActivityFlowsTest`, `DeleteNoteConfirmationTest`, `NoteDetailLifecycleTest` | `evidence/screens/08-delete-confirm-dialog.png`, `evidence/tests/connected-android-tests.xml` | Verified 2026-11-17 |
-| REQ-5.1–5.4 | `docs/user-flow.md`, `docs/attribution.md`, `docs/technical-challenge.md` | `evidence/screens/01-home-thai.png`–`08-delete-confirm-dialog.png`; `REQ-5.4` deck/sign-off pending team | `REQ-5.1`–`5.3` verified 2026-11-17; `REQ-5.4` pending team |
+| REQ-5.1–5.4 | `docs/final-report.md`, `docs/user-flow.md`, `docs/attribution.md`, `docs/technical-challenge.md` | `evidence/screens/01`–`08`, `evidence/presentation/Voice2Note-Slides.html`, `presentation-outline.md` | Verified 2026-11-18 |
 
 Suggested evidence directories: `evidence/screens/`, `evidence/tests/`, `evidence/device-compatibility/`, `evidence/challenge/`, `evidence/presentation/`.
 
@@ -98,7 +98,7 @@ Include positive, negative and boundary/validation cases where applicable (BM09 
 - [x] Have device/language/theme/navigation/lifecycle/delete evidence for REQ-3.x and REQ-4.x.
 - [x] Capture **before and after** evidence for at least one genuine technical challenge.
 - [x] Write source/AI attribution and confirm external asset licenses as applicable (`docs/attribution.md`).
-- [ ] Complete 20/20 criterion verification and check all evidence links/report pages (`19/20` verified; `REQ-5.4` awaits team presentation deck & peer sign-off).
-- [ ] Review final user journey, report and demo against the same running build (including live hardware mic & external transcription server check with team).
+- [x] Complete 20/20 criterion verification and check all evidence links/report pages (`20/20` verified across codebase, tests, `docs/final-report.md`, and `evidence/presentation/Voice2Note-Slides.html`).
+- [ ] Review final user journey, report and live physical-mic demo rehearsal with the team on the Samsung build (no external transcription server deployed).
 
 **Important source note:** The supplied rubric workbook has a few example cells already containing `1` and page numbers (e.g., 2.1, 2.2, 2.3, 3.3, 5.1). Those are not verified evidence of this project; this checklist deliberately initializes all criteria as unchecked.

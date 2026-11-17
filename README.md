@@ -44,8 +44,9 @@ export JAVA_HOME=/opt/android-studio/jbr
 
 ## CS265 Documentation & Evidence
 
-- [Consolidated Final Report (REQ-5.4 draft)](docs/final-report.md)
-- [Presentation Deck Outline & Code Walkthrough Guide](evidence/presentation/presentation-outline.md)
+- [Consolidated Final Report (REQ-5.4)](docs/final-report.md)
+- [Presentation Slides (HTML Deck)](evidence/presentation/Voice2Note-Slides.html)
+- [Presentation Outline & Code Walkthrough Guide](evidence/presentation/presentation-outline.md)
 - [Feature Inventory (REQ-1.1)](docs/feature-inventory.md)
 - [Test Cases & Results (REQ-1.2)](docs/test-cases.md)
 - [Course & Cross-Course Mapping (REQ-1.3–1.4)](docs/course-mapping.md)
