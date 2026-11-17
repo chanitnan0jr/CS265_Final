@@ -43,7 +43,8 @@ public final class TranscriptionWorker extends Worker {
     try {
       note = storage.findNote(jobId);
     } catch (JSONException e) {
-      note = null;
+      Log.w(TAG, "Storage unreadable while loading transcription job", e);
+      return getRunAttemptCount() < MAX_ATTEMPTS ? Result.retry() : Result.failure();
     }
     if (note == null || !note.getTranscription().isPending()) {
       return Result.success();
@@ -66,7 +67,8 @@ public final class TranscriptionWorker extends Worker {
                   current.withTranscription(
                       current.getBody(), jobId, TranscriptionStatus.PROCESSING, ""));
     } catch (JSONException e) {
-      marked = false;
+      Log.w(TAG, "Storage unreadable while marking job processing", e);
+      return getRunAttemptCount() < MAX_ATTEMPTS ? Result.retry() : Result.failure();
     }
     if (!marked) {
       return Result.success();

@@ -239,9 +239,11 @@ public final class MainActivity extends ComponentActivity {
       speechController.release();
     }
     if (noteDetailView != null) {
+      noteDetailView.bindLifecycle(null);
       noteDetailView.releaseMedia();
     }
     if (playbackView != null) {
+      playbackView.bindLifecycle(null);
       playbackView.releasePlayer();
     }
     super.onDestroy();

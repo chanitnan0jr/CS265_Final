@@ -31,6 +31,7 @@ public final class PlaybackView extends LinearLayout {
   @Nullable private MediaPlayer player;
   @Nullable private Uri boundUri;
   @Nullable private Lifecycle observedLifecycle;
+  private boolean observerAttached;
   private boolean ready;
   private boolean playing;
   private int positionMs;
@@ -104,14 +105,24 @@ public final class PlaybackView extends LinearLayout {
 
   public void bindLifecycle(@Nullable Lifecycle lifecycle) {
     if (observedLifecycle == lifecycle) {
+      if (observedLifecycle != null && !observerAttached && isAttachedToWindow()) {
+        observedLifecycle.addObserver(lifecycleObserver);
+        observerAttached = true;
+      }
       return;
     }
-    if (observedLifecycle != null) {
-      observedLifecycle.removeObserver(lifecycleObserver);
-    }
+    detachLifecycleObserver();
     observedLifecycle = lifecycle;
     if (observedLifecycle != null) {
       observedLifecycle.addObserver(lifecycleObserver);
+      observerAttached = true;
+    }
+  }
+
+  private void detachLifecycleObserver() {
+    if (observedLifecycle != null && observerAttached) {
+      observedLifecycle.removeObserver(lifecycleObserver);
+      observerAttached = false;
     }
   }
 
@@ -200,9 +211,18 @@ public final class PlaybackView extends LinearLayout {
   }
 
   @Override
+  protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    if (observedLifecycle != null && !observerAttached) {
+      observedLifecycle.addObserver(lifecycleObserver);
+      observerAttached = true;
+    }
+  }
+
+  @Override
   protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
-    bindLifecycle(null);
+    detachLifecycleObserver();
     releasePlayer();
   }
 

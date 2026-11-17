@@ -48,9 +48,14 @@ public class MainActivityFlowsTest {
   @Test
   public void fullNoteCreateSearchDetailDeleteAndBackFlow() {
     try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-      // Tab navigation -> Back returns to Home
+      // Tab navigation -> Back returns to Home (Library & Calendar)
       onView(withId(R.id.nav_library)).perform(click());
       onView(withId(R.id.button_library_new_folder)).check(matches(isDisplayed()));
+      pressBack();
+      onView(withId(R.id.button_home_record)).check(matches(isDisplayed()));
+
+      onView(withId(R.id.nav_calendar)).perform(click());
+      onView(withId(R.id.button_calendar_today)).check(matches(isDisplayed()));
       pressBack();
       onView(withId(R.id.button_home_record)).check(matches(isDisplayed()));
 

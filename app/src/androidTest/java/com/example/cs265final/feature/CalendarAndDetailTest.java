@@ -9,6 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,8 +30,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.json.JSONException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -109,7 +111,6 @@ public class CalendarAndDetailTest {
             TranscriptionStatus.FAILED,
             "Server error");
     new NoteStorage(context).save(Collections.singletonList(failed));
-    AtomicInteger dummy = new AtomicInteger();
 
     try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
       onView(withText("Failed Audio")).perform(click());
@@ -126,7 +127,16 @@ public class CalendarAndDetailTest {
       onView(withId(R.id.input_detail_rename)).perform(scrollTo(), replaceText("Renamed Audio"));
       onView(withId(R.id.button_detail_rename_save)).perform(scrollTo(), click());
       onView(withId(R.id.text_detail_title)).check(matches(withText("Renamed Audio")));
-      dummy.incrementAndGet();
+
+      // Retry assigns a new job ID and dispatches WorkManager
+      onView(withId(R.id.button_detail_retry)).perform(scrollTo(), click());
+      try {
+        List<Note> updated = new NoteStorage(context).load();
+        assertEquals(1, updated.size());
+        assertFalse("job_fail".equals(updated.get(0).getJobId()));
+      } catch (JSONException e) {
+        throw new AssertionError(e);
+      }
     }
   }
 }

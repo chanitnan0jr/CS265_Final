@@ -142,6 +142,91 @@ public class NoteDetailLifecycleTest {
     }
   }
 
+  @Test
+  public void reattachingViewStillPausesPlaybackOnBackground() throws Exception {
+    ByteBuffer pcm = ByteBuffer.allocate(16_000 * 6 * 2).order(ByteOrder.LITTLE_ENDIAN);
+    for (int sample = 0; sample < 16_000 * 6; sample++) {
+      short val = (short) (Math.sin(2.0 * Math.PI * 440.0 * sample / 16_000.0) * 16_000.0);
+      pcm.putShort(val);
+    }
+    AudioUtils.writeMp3File(file, pcm.array());
+
+    final LifecycleRegistry[] registryHolder = new LifecycleRegistry[1];
+    LifecycleOwner owner =
+        new LifecycleOwner() {
+          final LifecycleRegistry registry = new LifecycleRegistry(this);
+
+          {
+            registryHolder[0] = registry;
+          }
+
+          @NonNull
+          @Override
+          public Lifecycle getLifecycle() {
+            return registry;
+          }
+        };
+
+    AtomicReference<NoteDetailView> viewRef = new AtomicReference<>();
+    Note note =
+        new Note(
+            "Audio Reattach",
+            "",
+            "ปกติ",
+            "การเรียน",
+            2L,
+            Uri.fromFile(file).toString(),
+            AudioSource.RECORDED);
+
+    try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
+      scenario.onActivity(
+          activity -> {
+            registryHolder[0].setCurrentState(Lifecycle.State.RESUMED);
+            NoteDetailView view = new NoteDetailView(activity);
+            view.bindLifecycle(owner.getLifecycle());
+            ScrollView scroll = new ScrollView(activity);
+            scroll.addView(view);
+            activity.setContentView(scroll);
+            viewRef.set(view);
+
+            // Detach and reattach the same view, mimicking tab/detail reuse in MainActivity.
+            scroll.removeView(view);
+            scroll.addView(view);
+            view.bind(note, new SimpleDateFormat("dd/MM/yyyy", Locale.ROOT));
+          });
+
+      waitUntil(
+          10_000L,
+          () -> {
+            TextView timer = viewRef.get().findViewById(R.id.text_detail_timer);
+            return !"0:00".equals(timer.getText().toString());
+          });
+
+      scenario.onActivity(
+          activity -> {
+            Button listen = viewRef.get().findViewById(R.id.button_detail_listen);
+            listen.performClick();
+            assertEquals(
+                activity.getString(R.string.detail_stop_listening), listen.getText().toString());
+          });
+
+      waitUntil(
+          5_000L,
+          () -> {
+            TextView timer = viewRef.get().findViewById(R.id.text_detail_timer);
+            return "0:01".equals(timer.getText().toString());
+          });
+
+      scenario.onActivity(
+          activity -> {
+            registryHolder[0].setCurrentState(Lifecycle.State.CREATED);
+            Button listen = viewRef.get().findViewById(R.id.button_detail_listen);
+            assertEquals(
+                activity.getString(R.string.detail_listen_original), listen.getText().toString());
+          });
+    }
+  }
+
   private void waitUntil(long timeoutMs, Callable<Boolean> condition) throws InterruptedException {
     long deadline = System.currentTimeMillis() + timeoutMs;
     while (System.currentTimeMillis() < deadline) {

@@ -125,6 +125,7 @@ public final class NoteRepository {
       updatedFolders.add(trimmed);
     }
     if (!folderStorage.save(updatedFolders)) {
+      noteStorage.savePreservingTranscriptions(currentNotes);
       return null;
     }
     return new LibrarySnapshot(savedNotes, updatedFolders);
@@ -164,6 +165,7 @@ public final class NoteRepository {
       updatedFolders.add(fallbackFolder);
     }
     if (!folderStorage.save(updatedFolders)) {
+      noteStorage.savePreservingTranscriptions(currentNotes);
       return null;
     }
     return new LibrarySnapshot(savedNotes, updatedFolders);
